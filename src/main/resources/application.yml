@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/StaffDatabase
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 
+  sql:
+    init:
+      mode: always
