@@ -2,14 +2,7 @@ package com.example.demo.entity;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
-@Entity
-@Table(name = "users")
 public class Employee {
-	@Id
 	private int empId;
     private String empName;
     private String email;

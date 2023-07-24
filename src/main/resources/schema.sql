@@ -1,10 +1,10 @@
-CREATE TABLE if not exists department (
+CREATE TABLE IF NOT EXISTS department (
   dept_id int(8),
   dept_name varchar(20) NOT NULL,
   PRIMARY KEY (dept_id)
 );
 
-CREATE TABLE if not exists employee (
+CREATE TABLE IF NOT EXISTS employee (
   emp_id int(8),
   emp_name varchar(20) NOT NULL,
   email varchar(255) NOT NULL,

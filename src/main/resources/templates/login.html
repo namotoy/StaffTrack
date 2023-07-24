@@ -10,18 +10,18 @@
         <h1 class="my-3">ログイン</h1>
         <hr>
         <!--/* ログインエラー時にメッセージを表示 */-->
-        <div th:if="${param.error}" class="alert alert-danger">
-            名前またはパスワードが正しくありません
-        </div>
+        <div th:if="${loginError}" class="alert alert-danger">
+   	 	名前またはパスワードが正しくありません
+		</div>
         <form th:action="@{/login}" method="post">
             <table class="table table-bordered col-md-6">
             <tr class="form-group">
-                <th class="align-middle">社員ID</th>
-                <td><input type="text" class="form-controll" name="name"></td>
+                <th class="align-middle">従業員ID</th>
+                <td><input type="text" class="form-controll" id="id" name="id"></td>
             </tr>
             <tr class="form-group">
                 <th class="align-middle">パスワード</th>
-                <td><input type="text" class="form-controll" name="password"></td>
+                <td><input type="text" class="form-controll" id="password" name="password"></td>
             </tr>
             </table>
             <div>
