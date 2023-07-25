@@ -9,19 +9,21 @@
     <div class="container">
         <h1 class="my-3">ログイン</h1>
         <hr>
-        <!--/* ログインエラー時にメッセージを表示 */-->
-        <div th:if="${loginError}" class="alert alert-danger">
-   	 	名前またはパスワードが正しくありません
-		</div>
-        <form th:action="@{/login}" method="post">
+        <form th:action="@{/login}" th:object="${employee}" method="post">
             <table class="table table-bordered col-md-6">
             <tr class="form-group">
                 <th class="align-middle">従業員ID</th>
-                <td><input type="text" class="form-controll" id="id" name="id"></td>
+                <td>
+                	<input type="text" class="form-controll" th:field="*{empId}">
+                	<!-- <span class="error" th:if="${#fields.hasErrors('empId')}" th:errors="*{empId}"></span> -->
+               	</td>
             </tr>
             <tr class="form-group">
                 <th class="align-middle">パスワード</th>
-                <td><input type="text" class="form-controll" id="password" name="password"></td>
+                <td>
+                	<input type="text" class="form-controll" th:field="*{password}">
+                	<!-- <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span> -->
+               	</td>
             </tr>
             </table>
             <div>

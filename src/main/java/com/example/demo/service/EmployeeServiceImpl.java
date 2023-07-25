@@ -15,20 +15,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public EmployeeServiceImpl(EmployeeDao dao) {
 		this.dao = dao;
 	}
-
-//	@Override
-//	public List<Employee> findAll() {
-//		// TODO 自動生成されたメソッド・スタブ
-//		return null;
-//	}
-
-	@Override
+	
 	public Optional<Employee> userLogin(int id, String password) throws EmployeeNotFoundException {
-		//Optional<Employee>一件を取得 idが無ければ例外発生　
+		//データ一件を取得。idとpasswoordが無ければ例外発生　
 		try {
 			return dao.findById(id, password);
 		} catch (EmptyResultDataAccessException e) {
-			throw new EmployeeNotFoundException("指定された従業員が存在しません");
+			throw new EmployeeNotFoundException("IDまたはパスワードに誤りがあります");
 		}
 	}
 }
