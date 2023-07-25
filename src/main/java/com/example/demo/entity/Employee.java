@@ -2,6 +2,7 @@ package com.example.demo.entity;
 
 import java.time.LocalDate;
 
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 public class Employee {
@@ -12,7 +13,8 @@ public class Employee {
     private LocalDate birthDate;
     private Integer salary;
     private Integer deptId;
-    @NotNull(message = "パスワードは必須です")
+    
+    @NotEmpty(message = "パスワードは必須です")
     private String password;
     private Department department;
     public Integer getEmpId() {

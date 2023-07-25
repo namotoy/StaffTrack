@@ -15,17 +15,19 @@
                 <th class="align-middle">従業員ID</th>
                 <td>
                 	<input type="text" class="form-controll" th:field="*{empId}">
-                	<!-- <span class="error" th:if="${#fields.hasErrors('empId')}" th:errors="*{empId}"></span> -->
+                	<span class="error" th:if="${#fields.hasErrors('empId')}" th:errors="*{empId}"></span>
                	</td>
             </tr>
             <tr class="form-group">
                 <th class="align-middle">パスワード</th>
                 <td>
                 	<input type="text" class="form-controll" th:field="*{password}">
-                	<!-- <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span> -->
+                	<span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
                	</td>
             </tr>
             </table>
+            <!-- エラーメッセージが存在する場合にのみ表示 -->
+			<div th:if="${errorMessage}" th:text="${errorMessage}" class="error-message"></div>
             <div>
                 <input type="submit" class="btn btn-primary" value="ログイン">
             </div>

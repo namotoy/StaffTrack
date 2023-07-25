@@ -39,7 +39,7 @@ public class EmployeeController {
     @PostMapping("/login")
     public String userLogin(
 //    						@RequestParam("id") Integer id,
-//                            @RequestParam("password") String password,
+//                          @RequestParam("password") String password,
                             @Valid Employee employee,
             				BindingResult result,
                             HttpSession session,
@@ -54,12 +54,14 @@ public class EmployeeController {
 	    		session.setAttribute("username", employee1.get().getEmpName());
 	    		return "redirect:/menu";  
 	    	} else {
-	    		// IDまたはパスワードが無効な場合、再度ログイン画面へリダイレクト
+	    		// IDまたはパスワードが無効な場合、エラーメッセージを表示し再度ログイン画面へリダイレクト
 	    		redirectAttributes.addFlashAttribute("errorMessage", "IDまたはパスワードに誤りがあります");
-	    		return "login"; 
+	    		 return "redirect:/login"; 
 	    	}
 	    } catch(EmployeeNotFoundException e) {
-	    	return "login";
+	    	// EmployeeNotFoundExceptionが発生した場合、エラーメッセージを表示し再度ログイン画面へリダイレクト
+	    	redirectAttributes.addFlashAttribute("errorMessage", "IDまたはパスワードに誤りがあります");
+	    	 return "redirect:/login";
 	    }
     	
     }
