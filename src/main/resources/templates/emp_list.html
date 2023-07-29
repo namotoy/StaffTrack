@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<!-- 従業員情報が存在する場合にのみ表示 -->
+<div th:if=“${}“>
+<h1>従業員一覧</h1>
+<table>
+	<tr th:each=“obj : ${list}“>
+		<td th:text=${obj.empId}></td>
+		<td th:text=${obj.empName}></td>
+		<td th:text=${obj.email}></td>
+		<td th:text=${obj.birthDate}></td>
+		<td th:text=${obj.salary}></td>
+		<td th:text=${obj.department.deptName}></td>
+		<td><a type=“button” th:href=“@{/task/{id}(id=${obj.id})}“>編集</a></td>
+		<td><a type=“button” th:href=“@{/task/{id}(id=${obj.id})}“>削除</a></td>
+	</tr>
+</table>
+</div>
+
+</body>
+</html>
