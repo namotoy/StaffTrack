@@ -26,6 +26,7 @@ public class EmployeeController {
         model.addAttribute("username", username);
         return "menu";
     }
+    // 従業員一覧画面への遷移
     @GetMapping("/emp_list")
     public String showEmpList(Model model) {
         //従業員リストを取得

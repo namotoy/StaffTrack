@@ -1,26 +1,35 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>従業員一覧</title>
-</head>
-<body>
-<!-- 従業員情報が存在する場合にのみ表示 -->
-<!-- <div th:if=“${}“> -->
-<h1>従業員一覧</h1>
-<table>
-	<!-- <tr th:each=“obj : ${list}“>
-		<td th:text=${obj.empId}></td>
-		<td th:text=${obj.empName}></td>
-		<td th:text=${obj.email}></td>
-		<td th:text=${obj.birthDate}></td>
-		<td th:text=${obj.salary}></td>
-		<td th:text=${obj.department.deptName}></td>
-		<td><a type=“button” th:href=“@{/task/{id}(id=${obj.id})}“>編集</a></td>
-		<td><a type=“button” th:href=“@{/task/{id}(id=${obj.id})}“>削除</a></td>
-	</tr> -->
-</table>
-<!-- </div> -->
-
-</body>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>従業員一覧</title>
+	</head>
+	<body>
+	<!-- 従業員情報が存在する場合にのみ表示 -->
+	<!-- <div th:if="${}"> -->
+	<h2 th:text="${title}"></h2>
+	<table class="employee-table">
+		<tr>
+			<th>社員ID</th>
+			<th>社員名</th>
+			<th>メールアドレス</th>
+			<th>生年月日</th>
+			<th>給与</th>
+			<th>部署ID</th>
+			<th>編集</th>
+			<th>削除</th>
+		</tr>
+		<tr th:each="employee : ${list}">
+			<td th:text="${employee.empId}"></td>
+			<td th:text="${employee.empName}"></td>
+			<td th:text="${employee.email}"></td>
+			<td th:text="${employee.birthDate}"></td>
+			<td th:text="${employee.salary}"></td>
+			<td th:text="${employee.department.deptName}"></td>
+			<td><a th:href="@{/}"><button type="button" class="">編集</button></a></td>
+			<td><a th:href="@{/}"><button type="button" class="">削除</button></a></td>
+		</tr> 
+	</table>
+	<!-- </div> -->
+	</body>
 </html>
