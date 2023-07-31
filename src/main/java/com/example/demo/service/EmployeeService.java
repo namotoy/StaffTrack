@@ -1,5 +1,9 @@
 package com.example.demo.service;
 
-public interface EmployeeService {
+import java.util.List;
 
+import com.example.demo.entity.Employee;
+
+public interface EmployeeService {
+	List<Employee> findAll();
 }
