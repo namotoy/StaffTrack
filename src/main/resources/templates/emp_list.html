@@ -6,17 +6,12 @@
 		<title>従業員一覧</title>
 	</head>
 	<body>
-		<!-- 従業員データが存在しない場合に表示 -->
-		<div th:if="${errorMessage}">
-		 	<h2 th:text="${errorMessage}"></h2>
-		</div>
-		
-		<!-- 従業員情報が存在する場合に表示 -->
-		<div th:unless="${errorMessage}">
 		<h2 th:text="${title}"></h2>
 		<div class="return-menu">
 			<a th:href="@{/menu}"><button type="button">＜＜メニュー画面に戻る</button></a>
 		</div>
+		
+		<div th:unless="${errorMessage}">
 		<table class="employee-table">
 			<thead>
 				<tr>
@@ -44,5 +39,7 @@
 			</tbody>
 		</table>
 		</div>
+		<!-- 従業員データが存在しない場合に表示 -->
+	 	<h2 th:text="${errorMessage}"></h2>
 	</body>
 </html>
