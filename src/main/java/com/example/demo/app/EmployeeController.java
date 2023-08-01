@@ -18,6 +18,16 @@ public class EmployeeController {
     public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
+ // ログイン画面への遷移
+    @GetMapping("/login")
+    public String showLogin(Model model) {
+    	model.addAttribute("employee", new Employee());
+        if(model.containsAttribute("errorMessage")) {
+            model.addAttribute("loginError", true);
+        }
+        return "login";
+    }
+    
 	 // メニュー画面への遷移
     @GetMapping("/menu")
     public String showMenu(Model model, HttpSession session) {
@@ -26,9 +36,16 @@ public class EmployeeController {
         model.addAttribute("username", username);
         return "menu";
     }
+    
     // 従業員一覧画面への遷移
     @GetMapping("/emp_list")
-    public String showEmpList(Model model) {
+    public String showEmpList(Model model, HttpSession session) {
+    	//ログインしていないユーザーが直接従業員一覧ページへアクセスした場合、ログインページへ遷移
+//    	User user = (User) session.getAttribute("user");
+//        if (user == null) {
+//        	return "redirect:/login";
+//        }
+        
         //従業員リストを取得
 		List<Employee> list = employeeService.findAll();
 		

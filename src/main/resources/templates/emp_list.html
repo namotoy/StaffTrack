@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="UTF-8">
+		<link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
 		<title>従業員一覧</title>
 	</head>
 	<body>
@@ -13,29 +14,35 @@
 		<!-- 従業員情報が存在する場合に表示 -->
 		<div th:unless="${errorMessage}">
 		<h2 th:text="${title}"></h2>
+		<div class="return-menu">
+			<a th:href="@{/menu}"><button type="button">＜＜メニュー画面に戻る</button></a>
+		</div>
 		<table class="employee-table">
-			<tr>
-				<th>社員ID</th>
-				<th>社員名</th>
-				<th>メールアドレス</th>
-				<th>生年月日</th>
-				<th>給与</th>
-				<th>部署ID</th>
-				<th>編集</th>
-				<th>削除</th>
-			</tr>
-			<tr th:each="employee : ${list}">
-				<td th:text="${employee.empId}"></td>
-				<td th:text="${employee.empName}"></td>
-				<td th:text="${employee.email}"></td>
-				<td th:text="${employee.birthDate}"></td>
-				<td th:text="${employee.salary}"></td>
-				<td th:text="${employee.department.deptName}"></td>
-				<td><a th:href="@{/}"><button type="button" class="">編集</button></a></td>
-				<td><a th:href="@{/}"><button type="button" class="">削除</button></a></td>
-			</tr> 
+			<thead>
+				<tr>
+					<th>社員ID</th>
+					<th>社員名</th>
+					<th>メールアドレス</th>
+					<th>生年月日</th>
+					<th>給与</th>
+					<th>部署ID</th>
+					<th>編集</th>
+					<th>削除</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="employee : ${list}">
+					<td th:text="${employee.empId}"></td>
+					<td th:text="${employee.empName}"></td>
+					<td th:text="${employee.email}"></td>
+					<td th:text="${employee.birthDate}"></td>
+					<td th:text="${employee.salary}"></td>
+					<td th:text="${employee.department.deptName}"></td>
+					<td><a th:href="@{/}"><button type="button" class="">編集</button></a></td>
+					<td><a th:href="@{/}"><button type="button" class="">削除</button></a></td>
+				</tr> 
+			</tbody>
 		</table>
 		</div>
-		
 	</body>
 </html>
