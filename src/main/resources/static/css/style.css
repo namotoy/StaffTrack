@@ -39,7 +39,7 @@ body {
 
 .page-title{
 	margin-top: 20px;
-	margin-bottom: 60px;
+	margin-bottom: 40px;
 }
 
 .input-field{
@@ -50,4 +50,7 @@ body {
 
 .input-id{
 	margin-left: 15px;
+}
+.login-name{
+	margin-bottom: 10px;
 }

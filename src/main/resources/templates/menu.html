@@ -3,20 +3,22 @@
 <head>
 	<meta charset="UTF-8">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
 	<title>メニュー</title>
 </head>
 <body>
     <div class="container">
-        <h1 class="my-3">メニュー画面</h1>
-        <p th:text="${username} + 'さん'"></p>
-        <hr>
-	    <div><button type="button" class="btn btn-primary">従業員登録</button></div>
-	    <br>
-	    <div><button type="button" class="btn btn-primary">従業員一覧</button></div>
-	    <br>
-	    <div><button type="button" class="btn btn-primary">従業員検索</button></div>
-	    <br>
-    	<div class="center-block"><button type="button" class="btn btn-danger">ログアウト</button></div>
+        <h1 class="page-title">メニュー</h1>
+        <p class="login-name" th:text="'ようこそ'+ ${username} + 'さん'"></p>
+		<div class="contents">
+		    <div><button type="button" class="btn btn-primary">従業員一覧</button></div>
+		    <br>
+		    <div><button type="button" class="btn btn-primary">従業員登録</button></div>
+		    <br>
+		    <div><button type="button" class="btn btn-primary">従業員検索</button></div>
+		    <br>
+    		<div class="center-block"><button type="button" class="btn btn-danger">ログアウト</button></div>
+	    </div>
     </div>
 </body>
 </html>
