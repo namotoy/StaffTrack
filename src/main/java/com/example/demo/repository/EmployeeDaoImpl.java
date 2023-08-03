@@ -16,10 +16,6 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 	
-//	public List<Employee> findAll() {
-//		return null;
-//	}
-//	
 	@Override
 	public Optional<Employee> findById(int id, String password){
 		String sql = "SELECT emp_id, emp_name, email, birth_date, salary, dept_id, password"

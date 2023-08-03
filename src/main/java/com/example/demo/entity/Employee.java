@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 public class Employee {
-	@NotNull(message = "社員IDは必須です")
+	@NotNull(message = "従業員IDは必須です")
 	private Integer empId;
     private String empName;
     private String email;
