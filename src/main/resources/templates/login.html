@@ -3,32 +3,32 @@
 <head>
 	<meta charset="UTF-8">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
 	<title>ログイン</title>
 </head>
 <body>
     <div class="container">
-        <h1 class="my-3">ログイン</h1>
-        <hr>
+        <h1 class="page-title">ログイン</h1>
         <form th:action="@{/login}" th:object="${employee}" method="post">
-            <table class="table table-bordered col-md-6">
-            <tr class="form-group">
-                <th class="align-middle">従業員ID</th>
-                <td>
-                	<input type="text" class="form-controll" th:field="*{empId}">
-                	<span class="error" th:if="${#fields.hasErrors('empId')}" th:errors="*{empId}"></span>
-               	</td>
-            </tr>
-            <tr class="form-group">
-                <th class="align-middle">パスワード</th>
-                <td>
-                	<input type="text" class="form-controll" th:field="*{password}">
-                	<span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span> 
-               	</td>
-            </tr>
-            </table>
-            <div>
-                <input type="submit" class="btn btn-primary" value="ログイン">
-            </div>
+           	<div class="error" th:if="${#fields.hasErrors('empId')}" th:errors="*{empId}"></div>
+           	<div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+			<div th:if="${errorMessage}" th:text="${errorMessage}" class="error"></div>
+			<br>
+	        <div class="contents">
+	           <div class="input-field">
+		           <div>従業員ID</div>
+		           	<input type="text" class="input-id" th:field="*{empId}">
+	           	</div>
+	           	<div class="input-field">
+		           <p class="">パスワード</p>
+		           	<input type="text" class="" th:field="*{password}">
+	           	</div>
+	        </div>
+            <!-- エラーメッセージが存在する場合にのみ表示 -->
+			<br>
+	        <div>
+	          <input type="submit" class="btn btn-primary" value="ログイン">
+	        </div>
         </form>
     </div>
     <script src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>

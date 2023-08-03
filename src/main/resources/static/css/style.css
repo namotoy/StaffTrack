@@ -65,6 +65,37 @@ h2{
 }
 
 .employee-table th{
-	background-color: #1A69C6;
+	background-color: #0d6efd;;
     color: #FFFFFF;
+}
+
+.container{
+	text-align: center;
+}
+.contents{
+	text-align: center;
+}
+
+.page-title{
+	margin-top: 20px;
+	margin-bottom: 40px;
+}
+
+.input-field{
+	margin-bottom: 10px;
+	display:flex;
+	justify-content: center;
+}
+
+.input-id{
+	margin-left: 15px;
+}
+.login-name{
+	margin-bottom: 10px;
+}
+.error{
+	color:red;
+}
+.username {
+    font-size: 40px; 
 }
