@@ -3,7 +3,12 @@ spring:
     url: jdbc:mysql://localhost:3306/StaffDatabase
     driverClassName: com.mysql.cj.jdbc.Driver
     username: root
-    password: 
+    password:
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+      ddl-auto: none 
   sql:
     init:
       mode: always
