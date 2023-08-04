@@ -92,10 +92,8 @@ h2{
 }
 .login-name{
 	margin-bottom: 10px;
+	font-size: 20px;
 }
 .error{
 	color:red;
-}
-.username {
-    font-size: 40px; 
 }

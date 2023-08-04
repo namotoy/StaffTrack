@@ -17,31 +17,39 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringJUnitConfig
 @SpringBootTest
 @DisplayName("EmployeeControllerの結合テスト")
-public class EmployeeControllerUnitTest {
+public class EmployeeControllerTest {
 	@Autowired
+	//テスト対象クラス
     private WebApplicationContext context;
 
+	//MockMVオブジェクト
     private MockMvc mockMvc;
     
     @BeforeEach
     public void setupMockMvc(){
+    	//MockMVCオブジェクトにテスト対象メソッドを設定
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
     }
     
     @Test
     @DisplayName("従業員一覧ボタンをクリックすると従業員一覧画面に遷移するテスト")
     public void testShowEmpList() throws Exception{
+    	//"/emp_list"にGETでアクセスするリクエストを作成
         mockMvc.perform(get("/emp_list"))  
+        	//リクエストの結果のHttpStatusがOKであることを検証
             .andExpect(status().isOk())
+            //遷移先のviewの名前がemp_listであることを検証
             .andExpect(view().name(is("emp_list")));
     }
     
     @Test
     @DisplayName("ログインしていない場合、ログイン画面に遷移するテスト")
     public void testNotLoginMovelogin() throws Exception{
+    	//"/emp_list"にGETでアクセスするリクエストを作成
     	mockMvc.perform(get("/emp_list"))  
+    	//リクエストの結果のHttpStatusが3xx（リダイレクト）であることを検証
     	.andExpect(status().is3xxRedirection())
+    	//リダイレクト先のURLが"/login"であることを検証
     	.andExpect(redirectedUrl("/login"));
     }
-    
 }
