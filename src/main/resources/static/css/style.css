@@ -54,6 +54,10 @@ body {
 .login-name{
 	margin-bottom: 10px;
 }
+
+.username{
+  font-size: 30px;  
+}
 .error{
 	color:red;
 }

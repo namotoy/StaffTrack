@@ -1,8 +1,7 @@
 package com.example.demo.service;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.Set;
+import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,12 +9,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.dao.EmptyResultDataAccessException;
 
-import com.example.demo.entity.Employee;
 import com.example.demo.repository.EmployeeDao;
-
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validator;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -23,18 +19,26 @@ import jakarta.validation.Validator;
 public class EmployeeServiceImplUnitTest {
 	@Mock 
 	private EmployeeDao dao;
-	private Validator validator;
 	
 	 @InjectMocks
 	private EmployeeServiceImpl employeeServiceImpl;
 	 
 	 @Test
-	 @DisplayName("ログイン画面でIDが入力値が空の場合のテスト")
-	 void testGetIdNullThrowException() {
-		 Employee employee = new Employee();
-	     employee.setEmpId(null);
-	     
-	    Set<ConstraintViolation<Employee>> violations = validator.validate(employee);
-        assertFalse(violations.isEmpty());
+	 @DisplayName("IDまたはパスワードが取得できなかった場合のテスト")
+	 void testGetIdPWThrowException() {
+		 int id = 12345;  // 例として設定
+		 String password = "password";  // 例として設定
+		 
+		 //daoクラスのfindByIdメソッドが呼び出された時、少なくとも1つの結果が戻り値として返ってくる指定
+		 when(dao.findById(id,password)).thenThrow(new EmptyResultDataAccessException(1));
+		 
+		//IDとPWが取得できないとEmployeeNotFoundExceptionが発生することを検査
+		 try {
+			 //IDとPWが取得できた場合にEmployeeNotFoundExceptionは発生しない
+			 employeeServiceImpl.userLogin(id, password);
+			 fail("Expected EmployeeNotFoundException was not thrown.");
+		 } catch (EmployeeNotFoundException e) {
+			// Expected exception
+		 }
 	 }	 
 }
