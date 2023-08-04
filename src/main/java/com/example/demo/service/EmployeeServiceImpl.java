@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.example.demo.entity.Employee;
 import com.example.demo.repository.EmployeeDao;
 
+import jakarta.servlet.http.HttpSession;
+
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
@@ -24,4 +26,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 			throw new EmployeeNotFoundException("IDまたはパスワードに誤りがあります");
 		}
 	}
+	
+	public void userLogout(HttpSession session) {
+		
+	};
 }
