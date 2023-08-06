@@ -72,5 +72,15 @@ public class EmployeeController {
         model.addAttribute("username", username);
         return "menu";
     }
+    
+    // ログアウトボタン押下すると、メニュー画面からログイン画面へ遷移
+    @GetMapping("/logout")
+    public String userLogout(HttpSession session, RedirectAttributes attributes) {
+    	//userLogoutメソッドを呼び出す
+    	employeeService.userLogout(session);
+    	
+        // ログイン画面にリダイレクト
+        return "redirect:/login";
+    }
 }
 

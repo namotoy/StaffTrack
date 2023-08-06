@@ -28,6 +28,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	public void userLogout(HttpSession session) {
-		
+		// セッションがnullでないか確認
+	    if (session != null) {
+	        // セッションを無効化
+	        session.invalidate();
+	    }
 	};
 }
