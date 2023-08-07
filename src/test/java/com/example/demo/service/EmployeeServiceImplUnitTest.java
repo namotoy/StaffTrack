@@ -32,7 +32,7 @@ public class EmployeeServiceImplUnitTest {
 	@Mock 
 	private HttpSession mockSession;
 	
-	 @InjectMocks
+	@InjectMocks
 	private EmployeeServiceImpl employeeServiceImpl;
 	 
 	private Validator validator;
@@ -91,7 +91,7 @@ public class EmployeeServiceImplUnitTest {
 	 }	 
 	 
 	 @Test
-	    @DisplayName("ログアウトを実行した場合、セッションが無効化される")
+	    @DisplayName("ログアウトを実行した場合、セッションが無効化されるテスト")
 	    public void userLogoutSessionInvalidated() {
 		 // メソッドを実行
         employeeServiceImpl.userLogout(mockSession);
@@ -100,5 +100,19 @@ public class EmployeeServiceImplUnitTest {
         verify(mockSession, times(1)).invalidate();
 	    }
 	 
+	 @Test
+	 @DisplayName("セッションがすでに無効化されている場合、例外が発生することを確認するテスト")
+	 public void testSessionAlreadyInvalidated() {
+		 	// セッションがすでに無効化されている場合にスローされる例外を設定
+		    doThrow(new IllegalStateException("セッションがすでに無効化されています")).when(mockSession).invalidate();
+
+		    // ログアウトで発生する例外を受け取る
+		    Exception exception = assertThrows(IllegalStateException.class, () -> {
+		        employeeServiceImpl.userLogout(mockSession);
+		    });
+
+		    // 発生する例外メッセージと設定した例外メッセージが同一になるか検証
+		    assertEquals("セッションがすでに無効化されています", exception.getMessage());
+		}
 	 
-}
+ }
