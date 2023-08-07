@@ -5,7 +5,6 @@ import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -33,6 +32,14 @@ public class EmployeeServiceImplUnitTest {
 	
 	@InjectMocks
 	private EmployeeServiceImpl employeeServiceImpl;
+	
+	private Validator validator;
+
+	@BeforeEach
+	public void setUp() {
+	     ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+	     validator = factory.getValidator();
+	 }
 	
 	@Test
 	@DisplayName("DBの従業員情報が0件の場合のテスト")
@@ -81,17 +88,6 @@ public class EmployeeServiceImplUnitTest {
 		 //実際に返されたlistが3件であることを検証
 		 assertEquals(3, actualList.size());
 	}
-=======
-	 @InjectMocks
-	private EmployeeServiceImpl employeeServiceImpl;
-	 
-	private Validator validator;
-
-	@BeforeEach
-	public void setUp() {
-	     ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-	     validator = factory.getValidator();
-	 }
 	 
 	 @Test
 	 @DisplayName("IDが未入力の場合のテスト")

@@ -53,7 +53,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		}
 		return list;
 	}
-}
+
 	public Optional<Employee> findById(int id, String password){
 		String sql = "SELECT emp_id, emp_name, email, birth_date, salary, dept_id, password"
 				+ " FROM Employee WHERE emp_id = ? AND password = ? ";
