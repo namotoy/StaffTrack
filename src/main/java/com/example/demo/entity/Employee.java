@@ -2,17 +2,20 @@ package com.example.demo.entity;
 
 import java.time.LocalDate;
 
+
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 public class Employee {
-	@NotNull(message = "社員IDは必須です")
-	private Integer empId;
+	@NotNull(message = "従業員IDは必須です")
+	  private Integer empId;
     private String empName;
     private String email;
     private LocalDate birthDate;
     private Integer salary;
     private Integer deptId;
-    @NotNull(message = "パスワードは必須です")
+  
+    @NotEmpty(message = "パスワードは必須です")
     private String password;
     private Department department;
     public Integer getEmpId() {

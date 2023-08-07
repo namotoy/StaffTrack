@@ -52,4 +52,15 @@ public class EmployeeControllerTest {
     	//リダイレクト先のURLが"/login"であることを検証
     	.andExpect(redirectedUrl("/login"));
     }
+    @DisplayName("ログインボタンをクリックするとメニュー画面に遷移するテスト")
+    public void LoginToMenuTest() throws Exception{
+    	//"/login"からPOSTでアクセスするリクエストを作成
+        mockMvc.perform(post("/login") 
+        // フォームのパラメータをセット
+	        .param("empId", "50001") 
+	        .param("password", "sato2023")) 
+        	//リクエストの結果のHttpStatusがOKであることを検証
+            .andExpect(status().is3xxRedirection())
+          //リダイレクト先のURLが"/login"であることを検証
+        	.andExpect(redirectedUrl("/menu"));    }
 }
