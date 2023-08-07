@@ -1,5 +1,7 @@
 package com.example.demo.app;
 
+import java.util.List;
+
 import java.util.Optional;
 
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,7 @@ public class EmployeeController {
 	
 	private final EmployeeService employeeService;
 
+
     public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
@@ -35,6 +38,7 @@ public class EmployeeController {
         return "login";
     }
     
+
     // ログイン成功時のメニュー画面への遷移
     @PostMapping("/login")
     public String userLogin(
@@ -64,6 +68,7 @@ public class EmployeeController {
 	    }
     	
     }
+  
     // メニュー画面への遷移
     @GetMapping("/menu")
     public String showMenu(Model model, HttpSession session) {
@@ -72,5 +77,24 @@ public class EmployeeController {
         model.addAttribute("username", username);
         return "menu";
     }
+    
+    // 従業員一覧画面への遷移
+    @GetMapping("/emp_list")
+    public String showEmpList(Model model, HttpSession session) {
+    	//ログインしていないユーザーが直接従業員一覧ページへアクセスした場合、ログインページへ遷移
+//    	User user = (User) session.getAttribute("user");
+//        if (user == null) {
+//        	return "redirect:/login";
+//        }
+        
+        //従業員リストを取得
+		List<Employee> list = employeeService.findAll();
+		//DBから取得した従業員情報が0件の場合、エラーメッセージを表示
+		if (list.isEmpty()) {
+			model.addAttribute("errorMessage", "従業員情報の取得に失敗しました");
+		}
+		model.addAttribute("list", list);
+		model.addAttribute("title", "従業員一覧");
+		return "emp_list";
+	}
 }
-

@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -31,6 +32,26 @@ public class EmployeeControllerTest {
     }
     
     @Test
+    @DisplayName("従業員一覧ボタンをクリックすると従業員一覧画面に遷移するテスト")
+    public void testShowEmpList() throws Exception{
+    	//"/emp_list"にGETでアクセスするリクエストを作成
+        mockMvc.perform(get("/emp_list"))  
+        	//リクエストの結果のHttpStatusがOKであることを検証
+            .andExpect(status().isOk())
+            //遷移先のviewの名前がemp_listであることを検証
+            .andExpect(view().name(is("emp_list")));
+    }
+    
+    @Test
+    @DisplayName("ログインしていない場合、ログイン画面に遷移するテスト")
+    public void testNotLoginMovelogin() throws Exception{
+    	//"/emp_list"にGETでアクセスするリクエストを作成
+    	mockMvc.perform(get("/emp_list"))  
+    	//リクエストの結果のHttpStatusが3xx（リダイレクト）であることを検証
+    	.andExpect(status().is3xxRedirection())
+    	//リダイレクト先のURLが"/login"であることを検証
+    	.andExpect(redirectedUrl("/login"));
+    }
     @DisplayName("ログインボタンをクリックするとメニュー画面に遷移するテスト")
     public void LoginToMenuTest() throws Exception{
     	//"/login"からPOSTでアクセスするリクエストを作成

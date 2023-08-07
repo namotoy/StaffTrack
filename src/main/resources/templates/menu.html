@@ -9,11 +9,13 @@
 <body>
     <div class="container">
         <h1 class="page-title">メニュー</h1>
-        <p class="login-name">
-		  ようこそ  <span class="username" th:text="${username}"></span> さん
-		</p>
 		<div class="contents">
-		    <div><button type="button" class="btn btn-primary">従業員一覧</button></div>
+        <p class="login-name">
+		      ようこそ  <span class="username" th:text="${username}"></span> さん
+		    </p>
+        <div>
+		      <a th:href="@{/emp_list}"><button type="button" class="btn btn-primary">従業員一覧</button></a>
+		    </div>
 		    <br>
 		    <div><button type="button" class="btn btn-primary">従業員登録</button></div>
 		    <br>
