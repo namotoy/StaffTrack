@@ -62,8 +62,8 @@ public class EmployeeController {
 	    	redirectAttributes.addFlashAttribute("errorMessage", "IDまたはパスワードに誤りがあります");
 	    	 return "redirect:/login";
 	    }
-    	
     }
+    
     // メニュー画面への遷移
     @GetMapping("/menu")
     public String showMenu(Model model, HttpSession session) {

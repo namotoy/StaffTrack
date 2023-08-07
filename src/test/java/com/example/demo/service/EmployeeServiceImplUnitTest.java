@@ -17,6 +17,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import com.example.demo.entity.Employee;
 import com.example.demo.repository.EmployeeDao;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -27,6 +28,9 @@ import jakarta.validation.ValidatorFactory;
 public class EmployeeServiceImplUnitTest {
 	@Mock 
 	private EmployeeDao dao;
+	
+	@Mock 
+	private HttpSession mockSession;
 	
 	 @InjectMocks
 	private EmployeeServiceImpl employeeServiceImpl;
@@ -85,4 +89,16 @@ public class EmployeeServiceImplUnitTest {
 			// Expected exception
 		 }
 	 }	 
+	 
+	 @Test
+	    @DisplayName("ログアウトを実行した場合、セッションが無効化される")
+	    public void userLogoutSessionInvalidated() {
+		 // メソッドを実行
+        employeeServiceImpl.userLogout(mockSession);
+
+        // セッションが無効化されるかどうかを検証
+        verify(mockSession, times(1)).invalidate();
+	    }
+	 
+	 
 }
