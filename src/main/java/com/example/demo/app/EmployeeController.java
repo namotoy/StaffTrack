@@ -37,7 +37,6 @@ public class EmployeeController {
         return "login";
     }
     
-
     // ログイン成功時のメニュー画面への遷移
     @PostMapping("/login")
     public String userLogin(
@@ -96,4 +95,11 @@ public class EmployeeController {
 		model.addAttribute("title", "従業員一覧");
 		return "emp_list";
 	}
+    
+    // 従業員登録画面への遷移
+    @GetMapping("/emp_regist")
+    public String showEmpRegist(Model model) {
+        return "emp_regist";
+    }
+    
 }
