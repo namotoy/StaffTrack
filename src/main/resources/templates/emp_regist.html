@@ -7,12 +7,13 @@
 		<title>従業員登録</title>
 	</head>
 	<body>
-		<h2 th:text="${title}"></h2>
+		<div class="container">
+		<h1 class="page-title">従業員登録</h1>
 		<div class="return-menu">
 			<a th:href="@{/menu}"><button type="button">＜＜メニュー画面に戻る</button></a>
 		</div>
-		
-		<div th:unless="${errorMessage}">
+		<div class="contents">
+		<div class="regist-guide">登録する従業員情報を入力してください</div> 
 		<table class="regist-table">
 			<tbody>
 				<tr>
@@ -37,7 +38,14 @@
 			  	</tr>
 				<tr>
 			    <th>部署</th>
-			    <td contenteditable="true"></td>
+			    <td contenteditable="true">
+					<select name="department" id="department-select">
+					  <option value="">部署名</option>
+					  <option value="sales">営業部</option>
+					  <option value="general">総務部</option>
+					  <option value="development">開発部</option>
+					</select>
+			    </td>
 			  	</tr>
 				<tr>
 			    <th>パスワード</th>
@@ -49,7 +57,10 @@
 			  	</tr>
 			</tbody>
 		</table>
-		 <input type="submit" class="btn btn-primary" value="確認">
+			<div>
+		    	 <a th:href="@{/emp_regist_confirm}"><button type="button" class="btn btn-primary">確認</button></a>
+		     </div>
+		 </div>
 		</div>
 	</body>
 </html>

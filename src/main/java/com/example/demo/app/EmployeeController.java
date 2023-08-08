@@ -102,4 +102,16 @@ public class EmployeeController {
         return "emp_regist";
     }
     
+    // 従業員登録確認画面への遷移
+    @GetMapping("/emp_regist_confirm")
+    public String showEmpRegistConfirm(Model model) {
+    	return "emp_regist_confirm";
+    }
+    
+    // 従業員登録完了画面への遷移
+    @GetMapping("/emp_regist_complete")
+    public String showEmpRegistComplete(Model model) {
+    	return "emp_regist_complete";
+    }
+    
 }

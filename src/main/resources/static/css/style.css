@@ -48,6 +48,7 @@ h2{
 
 .return-menu{
 	margin: 15px 50px; 
+	text-align: left;
 }
 
 .employee-table {
@@ -102,13 +103,17 @@ h2{
   font-size: 30px;  
 }
 
-
 /********************************************
  従業員登録
 *********************************************/
+.regist-table{
+	width:500px;
+	margin:auto;
+	margin-bottom:20px;
+}    
+
 .regist-table th,td{
 	height: 25px;
-	width:100px;
     padding: 5px;
     border: solid 1px #2c3e50;
     overflow: hidden;
@@ -116,9 +121,28 @@ h2{
 }
 
 .regist-table th{
-	background-color: #E2DDD4;;
+	background-color: rgb(243, 238, 230);;
     color: #000000;
+    width:100px;
+    text-align: left;
+    padding-left: 15px;
 }
 
-
-
+.regist-table td{
+	width:200px;
+}
+.regist-guide{
+	font-size: 20px;
+}
+.regist-confirm{
+	display:flex;
+	justify-content:center;
+	text-align: center;
+}
+.btn-regist{
+	margin-right: 20px;
+	width: 100px;
+}
+.btn-return{
+	width: 100px;
+}

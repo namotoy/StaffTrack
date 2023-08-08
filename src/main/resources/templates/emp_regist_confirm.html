@@ -1,10 +1,50 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-
-</body>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+		<link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+		<title>従業員登録確認</title>
+	</head>
+	<body>
+		<div class="container">
+		<h1 class="page-title">従業員登録</h1>
+		<div class="contents">
+		<div class="regist-guide">以下の内容で登録しますか？</div> 
+		<table class="regist-table">
+			<tbody>
+				<tr>
+			    <th>従業員ID</th>
+			    <td contenteditable="true"></td>
+			  	</tr>
+				<tr>
+			    <th>従業員名</th>
+			    <td contenteditable="true"></td>
+			  	</tr>
+				<tr>
+			    <th>メールアドレス</th>
+			    <td contenteditable="true"></td>
+			  	</tr>
+				<tr>
+			    <th>生年月日</th>
+			    <td contenteditable="true"></td>
+			  	</tr>
+				<tr>
+			    <th>給与</th>
+			    <td contenteditable="true"></td>
+			  	</tr>
+				<tr>
+			    <th>部署</th>
+			    <td contenteditable="true">
+			    </td>
+			  	</tr>
+			</tbody>
+		</table>
+		<div class="regist-confirm">
+			<a th:href="@{/emp_regist_complete}"><button type="button" class="btn btn-primary btn-regist">登録</button></a>
+			<a th:href="@{/emp_regist}"><button type="button" class="btn btn-light btn-return">戻る</button></a>
+		 </div>
+		 </div>
+		</div>
+	</body>
 </html>

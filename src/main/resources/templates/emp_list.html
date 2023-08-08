@@ -6,7 +6,9 @@
 		<title>従業員一覧</title>
 	</head>
 	<body>
-		<h2 th:text="${title}"></h2>
+		<div class="container">
+		<h1 class="page-title">従業員一覧</h1>
+		<!-- <h2 th:text="${title}"></h2> -->
 		<div class="return-menu">
 			<a th:href="@{/menu}"><button type="button">＜＜メニュー画面に戻る</button></a>
 		</div>
@@ -40,6 +42,7 @@
 		</table>
 		</div>
 		<!-- 従業員データが存在しない場合に表示 -->
-	 	<h2 th:text="${errorMessage}"></h2>
+	 	<h2 class="error" th:text="${errorMessage}"></h2>
+	 	</div>
 	</body>
 </html>
