@@ -29,4 +29,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 			throw new EmployeeNotFoundException("IDまたはパスワードに誤りがあります");
 		}
 	}
+	
+	@Override
+	public void insert(Employee employee) {
+		dao.insert(employee);
+	};
 }
