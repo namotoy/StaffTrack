@@ -91,18 +91,33 @@ public class EmployeeServiceImplUnitTest {
 	 }	 
 	 
 	 @Test
-	    @DisplayName("ログアウトを実行した場合、セッションが無効化されるテスト")
-	    public void userLogoutSessionInvalidated() {
-		 // メソッドを実行
-        employeeServiceImpl.userLogout(mockSession);
-
-        // セッションが無効化されるかどうかを検証
-        verify(mockSession, times(1)).invalidate();
+     @DisplayName("ログアウトを実行した場合、セッションが無効化されるテスト")
+    public void userLogoutSessionInvalidated() {
+			 // メソッドを実行
+	        employeeServiceImpl.userLogout(mockSession);
+	
+	        // セッションが無効化されるかどうかを検証
+	        verify(mockSession, times(1)).invalidate();
+		    }
+	 
+	 @Test
+     @DisplayName("セッションが既に無効化されており、ログアウトが失敗するテスト")
+	 public void testUserLogoutWithAlreadyInvalidatedSession() {
+	        // セッションが無効化された状態を設定
+	        doThrow(new IllegalStateException()).when(mockSession).invalidate();
+	        
+	        // メソッドが呼び出されたときに不正（IllegalStateException）が発生することを検証
+	        assertThrows(IllegalStateException.class, () -> {
+	        	employeeServiceImpl.userLogout(mockSession);
+	        	
+        	// 無効化メソッドが1回呼び出されたことを確認
+        	verify(mockSession, times(1)).invalidate();
+	        });
 	    }
 	 
 	 @Test
-	 @DisplayName("セッションがすでに無効化されている場合、例外が発生することを確認するテスト")
-	 public void testSessionAlreadyInvalidated() {
+	 @DisplayName("ログアウト処理中に例外が発生することを確認するテスト")
+	 public void testSessionAlreadyInvalidatedErrorHandling() {
 		 	// セッションがすでに無効化されている場合にスローされる例外を設定
 		    doThrow(new IllegalStateException("セッションがすでに無効化されています")).when(mockSession).invalidate();
 
@@ -114,5 +129,4 @@ public class EmployeeServiceImplUnitTest {
 		    // 発生する例外メッセージと設定した例外メッセージが同一になるか検証
 		    assertEquals("セッションがすでに無効化されています", exception.getMessage());
 		}
-	 
  }
