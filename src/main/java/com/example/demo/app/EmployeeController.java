@@ -106,17 +106,27 @@ public class EmployeeController {
         return "emp_regist";
     }
     
-    // 従業員登録画面から従業員登録確認画面への遷移
+    // 登録画面から確認画面への遷移
     @PostMapping("/emp_regist")
-    public String insert(@Valid @ModelAttribute EmployeeForm employeeForm,
+    public String transitConfirm(@Valid @ModelAttribute EmployeeForm employeeForm,
     		BindingResult result, Model model) {
-//    	Employee employee = makeEmployee(employeeForm); 
     	if(result.hasErrors()) {
     		return "emp_regist";  // エラーがある場合、登録画面に戻る
     	}
-//    	employeeService.insert(employee);
     	model.addAttribute("employee", employeeForm);
     	return "emp_regist_confirm"; // エラーがない場合、確認画面に進む
+    }
+    
+    // 確認画面から完了画面への遷移
+    @PostMapping("/emp_regist_complete")
+    public String insert(@ModelAttribute EmployeeForm employeeForm,
+    		BindingResult result, Model model) {
+    	// EmployeeFormからEmployeeオブジェクトを作成
+    	Employee employee = makeEmployee(employeeForm); 
+    	// データベースに従業員情報を保存
+    	employeeService.insert(employee);
+//    	model.addAttribute("employee", employeeForm);
+    	return "emp_regist_complete";
     }
     
     //入力フォームから送信された情報を従業員リストに追加
@@ -131,19 +141,6 @@ public class EmployeeController {
     	employee.setPassword(employeeForm.getPassword());
     	
     	return employee;
-    }
-    
-    // 従業員登録確認画面への遷移
-//    @GetMapping("/emp_regist_confirm")
-//    public String showEmpRegistconfirm(@ModelAttribute("employeeForm") EmployeeForm employeeForm, Model model) {
-//    	model.addAttribute("employeeForm", new EmployeeForm());
-//        return "emp_regist_confirm";
-//    }
-    
-    // 従業員登録完了画面への遷移
-    @GetMapping("/emp_regist_complete")
-    public String showEmpRegistComplete(Model model) {
-    	return "emp_regist_complete";
     }
     
 }

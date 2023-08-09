@@ -74,10 +74,20 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		return employeeOpt;
 	}
 	
+	// dept_nameからdept_idを取得するメソッド
+	public int getDeptIdByName(String deptName) {
+	    String sql = "SELECT dept_id FROM department WHERE dept_name = ?";
+	    return jdbcTemplate.queryForObject(sql, Integer.class, deptName);
+	}
+	
 	@Override
 	public void insert(Employee employee) {
-		jdbcTemplate.update("INSERT INTO employee(emp_Id, emp_name, email, birth_date, salary, dept_name, password) VALUES(?, ?, ?, ?, ?, ?, ?)",
-		employee.getEmpId(),employee.getEmpName(),employee.getEmail(), employee.getBirthDate(), employee.getSalary(), employee.getDeptName(), employee.getPassword());
+		// dept_nameからdept_idを取得
+	    int deptId = getDeptIdByName(employee.getDeptName());
+		
+	    // employeeテーブルにデータを挿入
+		jdbcTemplate.update("INSERT INTO employee(emp_Id, emp_name, email, birth_date, salary, dept_id, password) VALUES(?, ?, ?, ?, ?, ?, ?)",
+		employee.getEmpId(),employee.getEmpName(),employee.getEmail(), employee.getBirthDate(), employee.getSalary(), deptId, employee.getPassword());
 	};
 	
 }

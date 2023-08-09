@@ -22,7 +22,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	public Optional<Employee> userLogin(int id, String password) throws EmployeeNotFoundException {
-		//データ1件を取得してidとpasswoordがあるか検証。無ければ例外発生。　
+		//データ1件を取得してidとpasswoordがあるか検証。無ければ例外発生
 		try {
 			return dao.findById(id, password);
 		} catch (EmptyResultDataAccessException e) {
