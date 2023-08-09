@@ -15,28 +15,27 @@
 			<tbody>
 				<tr>
 			    <th>従業員ID</th>
-			    <td contenteditable="true"></td>
+			    <td th:text="${employee.empId}"></td>
 			  	</tr>
 				<tr>
 			    <th>従業員名</th>
-			    <td contenteditable="true"></td>
+			    <td th:text="${employee.empName}"></td>
 			  	</tr>
 				<tr>
 			    <th>メールアドレス</th>
-			    <td contenteditable="true"></td>
+			    <td th:text="${employee.email}"></td>
 			  	</tr>
 				<tr>
 			    <th>生年月日</th>
-			    <td contenteditable="true"></td>
+			    <td th:text="${employee.birthDate}"></td>
 			  	</tr>
 				<tr>
 			    <th>給与</th>
-			    <td contenteditable="true"></td>
+			    <td th:text="${employee.salary}"></td>
 			  	</tr>
 				<tr>
 			    <th>部署</th>
-			    <td contenteditable="true">
-			    </td>
+			    <td th:text="${employee.deptName}"></td>
 			  	</tr>
 			</tbody>
 		</table>

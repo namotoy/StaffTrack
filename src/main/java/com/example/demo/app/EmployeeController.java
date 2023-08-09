@@ -7,7 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.entity.Employee;
@@ -18,6 +20,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 @Controller
+@SessionAttributes("employee")
 public class EmployeeController {
 	
 	private final EmployeeService employeeService;
@@ -98,15 +101,39 @@ public class EmployeeController {
     
     // 従業員登録画面への遷移
     @GetMapping("/emp_regist")
-    public String showEmpRegist(Model model) {
+    public String showEmpRegist(@ModelAttribute("employeeForm") EmployeeForm employeeForm, Model model) {
+    	model.addAttribute("employeeForm", new EmployeeForm());
         return "emp_regist";
     }
     
-    // 従業員登録確認画面への遷移
-    @GetMapping("/emp_regist_confirm")
-    public String showEmpRegistConfirm(Model model) {
-    	return "emp_regist_confirm";
+    // 従業員登録画面から従業員登録確認画面への遷移
+    @PostMapping("/emp_regist")
+    public String insert(@Valid @ModelAttribute EmployeeForm employeeForm,
+    		BindingResult result, Model model) {
+    	Employee employee = makeEmployee(employeeForm); 
+    	if(result.hasErrors()) {
+    		return "emp_regist";  // エラーがある場合、登録画面に戻る
+    	}
+    	employeeService.insert(employee);
+    	model.addAttribute("employee", employeeForm);
+    	return "emp_regist_confirm"; // エラーがない場合、確認画面に進む
     }
+    
+    //入力フォームから送信された情報を従業員リストに追加
+    private Employee makeEmployee(EmployeeForm employeeForm) {
+    	Employee employee = new Employee();
+    	employee.setEmpId(employeeForm.getEmpId());
+    	employee.setEmpName(employeeForm.getEmpName());
+    	employee.setEmail(employeeForm.getEmail());
+    	employee.setBirthDate(employeeForm.getBirthDate());
+    	employee.setSalary(employeeForm.getSalary());
+    	employee.setDeptName(employeeForm.getDeptName());
+    	employee.setPassword(employeeForm.getPassword());
+    	
+    	return employee;
+    }
+    
+    
     
     // 従業員登録完了画面への遷移
     @GetMapping("/emp_regist_complete")

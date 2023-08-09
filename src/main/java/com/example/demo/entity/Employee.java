@@ -18,7 +18,6 @@ public class Employee {
     @NotEmpty(message = "パスワードは必須です")
     private String password;
     private Department department;
-    private String confirmPassword;
     
 	public Integer getEmpId() {
         return empId;
@@ -73,12 +72,6 @@ public class Employee {
 	}
 	public void setDeptName(String deptName) {
 		this.deptName = deptName;
-	}
-	public String getConfirmPassword() {
-		return confirmPassword;
-	}
-	public void setConfirmPassword(String confirmPassword) {
-		this.confirmPassword = confirmPassword;
 	}
 	
 }

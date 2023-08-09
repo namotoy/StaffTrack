@@ -13,33 +13,42 @@
 			<a th:href="@{/menu}"><button type="button">＜＜メニュー画面に戻る</button></a>
 		</div>
 		<div class="contents">
+		<form th:action="@{/emp_regist}" th:object="${employeeForm}" method="post">
+			<div class="error" th:if="${#fields.hasErrors('empId')}" th:errors="*{empId}"></div>
+           	<div class="error" th:if="${#fields.hasErrors('empName')}" th:errors="*{empName}"></div>
+           	<div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+           	<div class="error" th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></div>
+           	<div class="error" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}"></div>
+           	<div class="error" th:if="${#fields.hasErrors('deptName')}" th:errors="*{deptName}"></div>
+           	<div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+           	<div class="error" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></div>
 		<div class="regist-guide">登録する従業員情報を入力してください</div> 
-		<table class="regist-table">
+			<table class="regist-table">
 			<tbody>
 				<tr>
 			    <th>従業員ID</th>
-			    <td contenteditable="true"></td>
+			    <td><input type="text" th:field="*{empId}"></td>
 			  	</tr>
 				<tr>
 			    <th>従業員名</th>
-			    <td contenteditable="true"></td>
+			    <td><input type="text" th:field="*{empName}"></td>
 			  	</tr>
 				<tr>
 			    <th>メールアドレス</th>
-			    <td contenteditable="true"></td>
+			    <td><input type="text" th:field="*{email}"></td>
 			  	</tr>
 				<tr>
 			    <th>生年月日</th>
-			    <td contenteditable="true"></td>
+			    <td><input type="date" th:field="*{birthDate}"></td>
 			  	</tr>
 				<tr>
 			    <th>給与</th>
-			    <td contenteditable="true"></td>
+			     <td><input type="text" th:field="*{salary}"></td>
 			  	</tr>
 				<tr>
 			    <th>部署</th>
-			    <td contenteditable="true">
-					<select name="department" id="department-select">
+			    <td>
+			    	<select th:field="*{deptName}" id="department-select">
 					  <option value="">部署名</option>
 					  <option value="sales">営業部</option>
 					  <option value="general">総務部</option>
@@ -49,17 +58,18 @@
 			  	</tr>
 				<tr>
 			    <th>パスワード</th>
-			    <td contenteditable="true"></td>
+			    <td><input type="text" th:field="*{password}"></td>
 			  	</tr>
 				<tr>
 			    <th>パスワード(確認)</th>
-			    <td contenteditable="true"></td>
+			    <td><input type="text" th:field="*{confirmPassword}"></td>
 			  	</tr>
 			</tbody>
 		</table>
 			<div>
-		    	 <a th:href="@{/emp_regist_confirm}"><button type="button" class="btn btn-primary btn-confirm">確認</button></a>
+		    	 <button type="submit" class="btn btn-primary btn-confirm">確認</button>
 		     </div>
+	      </form>
 		 </div>
 		</div>
 	</body>
