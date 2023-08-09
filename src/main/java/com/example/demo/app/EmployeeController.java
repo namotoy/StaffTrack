@@ -65,7 +65,6 @@ public class EmployeeController {
 	    	redirectAttributes.addFlashAttribute("errorMessage", "IDまたはパスワードに誤りがあります");
 	    	 return "redirect:/login";
 	    }
-    	
     }
   
     // メニュー画面への遷移
@@ -77,6 +76,16 @@ public class EmployeeController {
         return "menu";
     }
     
+    // ログアウトボタン押下すると、メニュー画面からログイン画面へ遷移
+    @GetMapping("/logout")
+    public String userLogout(HttpSession session, RedirectAttributes attributes) {
+    	//userLogoutメソッドを呼び出す
+    	employeeService.userLogout(session);
+    	
+        // ログイン画面にリダイレクト
+        return "redirect:/login";
+    }
+  
     // 従業員一覧画面への遷移
     @GetMapping("/emp_list")
     public String showEmpList(Model model, HttpSession session) {
