@@ -110,11 +110,11 @@ public class EmployeeController {
     @PostMapping("/emp_regist")
     public String insert(@Valid @ModelAttribute EmployeeForm employeeForm,
     		BindingResult result, Model model) {
-    	Employee employee = makeEmployee(employeeForm); 
+//    	Employee employee = makeEmployee(employeeForm); 
     	if(result.hasErrors()) {
     		return "emp_regist";  // エラーがある場合、登録画面に戻る
     	}
-    	employeeService.insert(employee);
+//    	employeeService.insert(employee);
     	model.addAttribute("employee", employeeForm);
     	return "emp_regist_confirm"; // エラーがない場合、確認画面に進む
     }
@@ -133,7 +133,12 @@ public class EmployeeController {
     	return employee;
     }
     
-    
+    // 従業員登録確認画面への遷移
+//    @GetMapping("/emp_regist_confirm")
+//    public String showEmpRegistconfirm(@ModelAttribute("employeeForm") EmployeeForm employeeForm, Model model) {
+//    	model.addAttribute("employeeForm", new EmployeeForm());
+//        return "emp_regist_confirm";
+//    }
     
     // 従業員登録完了画面への遷移
     @GetMapping("/emp_regist_complete")

@@ -76,7 +76,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	
 	@Override
 	public void insert(Employee employee) {
-		jdbcTemplate.update("INSERT INTO employee(emp_Id, emp_name, email, birth_date, salary, deptName, password) VALUES(?, ?, ?, ?, ?, ?, ?)",
+		jdbcTemplate.update("INSERT INTO employee(emp_Id, emp_name, email, birth_date, salary, dept_name, password) VALUES(?, ?, ?, ?, ?, ?, ?)",
 		employee.getEmpId(),employee.getEmpName(),employee.getEmail(), employee.getBirthDate(), employee.getSalary(), employee.getDeptName(), employee.getPassword());
 	};
 	
