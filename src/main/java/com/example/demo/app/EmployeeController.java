@@ -110,11 +110,19 @@ public class EmployeeController {
     @PostMapping("/emp_regist")
     public String transitConfirm(@Valid @ModelAttribute EmployeeForm employeeForm,
     		BindingResult result, Model model) {
+    	
+    	// 従業員IDが既に存在するかチェック
+        if(employeeForm.getEmpId() != null && employeeService.findByEmpId(employeeForm.getEmpId()).isPresent()) {
+            result.rejectValue("empId", "duplicate", "この従業員IDは既に存在します");
+        }
+        // エラーがある場合、登録画面に戻る
     	if(result.hasErrors()) {
-    		return "emp_regist";  // エラーがある場合、登録画面に戻る
+    		model.addAttribute("employeForm", employeeForm);
+    		return "emp_regist"; 
     	}
+    	// エラーがない場合、確認画面に進む
     	model.addAttribute("employee", employeeForm);
-    	return "emp_regist_confirm"; // エラーがない場合、確認画面に進む
+    	return "emp_regist_confirm"; 
     }
     
     // 確認画面から完了画面への遷移
@@ -125,7 +133,6 @@ public class EmployeeController {
     	Employee employee = makeEmployee(employeeForm); 
     	// データベースに従業員情報を保存
     	employeeService.insert(employee);
-//    	model.addAttribute("employee", employeeForm);
     	return "emp_regist_complete";
     }
     
@@ -139,8 +146,6 @@ public class EmployeeController {
     	employee.setSalary(employeeForm.getSalary());
     	employee.setDeptName(employeeForm.getDeptName());
     	employee.setPassword(employeeForm.getPassword());
-    	
     	return employee;
     }
-    
 }

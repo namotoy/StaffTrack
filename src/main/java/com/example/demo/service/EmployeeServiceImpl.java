@@ -31,7 +31,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	@Override
-	public void insert(Employee employee) {
-		dao.insert(employee);
-	};
+    public Optional<Employee> findByEmpId(int empId) {
+        return dao.findByEmpId(empId);
+    }
+	
+	public boolean isEmpIdDuplicated(int empId) {
+        return dao.findByEmpId(empId).isPresent();
+    }
+
+    @Override
+    public void insert(Employee employee) throws DuplicateEmpIdException {
+        if (isEmpIdDuplicated(employee.getEmpId())) {
+            throw new DuplicateEmpIdException("従業員IDが重複しています");
+        }
+        dao.insert(employee);
+    }
 }

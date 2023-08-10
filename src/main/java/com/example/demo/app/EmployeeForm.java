@@ -2,7 +2,9 @@ package com.example.demo.app;
 
 import java.time.LocalDate;
 
+import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
@@ -12,31 +14,41 @@ public class EmployeeForm {
 	@NotNull  (message = "従業員IDを入力してください")
 	private Integer empId;
 	
-	@NotNull  (message = "従業員名を入力してください")
 	@Size(min = 1, max = 20, message = "従業員名は20文字以内で入力してください")
+	@NotEmpty (message = "従業員名を入力してください")
     private String empName;
 	
-	@NotNull  (message = "メールアドレスを入力してください")
 	@Size(min = 1, max = 255, message = "メールアドレスは255文字以内で入力してください")
+	@NotEmpty (message = "メールアドレスを入力してください")
     private String email;
 	
-	@NotNull (message = "生年月日を入力してください")
 	@Past(message = "生年月日は有効な日付を入力してください")
+	@NotNull (message = "生年月日を入力してください")
     private LocalDate birthDate;
 	
 	@Digits(integer = 255, fraction = 0, message = "給与は255桁までで入力してください")
 	@NotNull (message = "給与を入力してください")
-    private Integer salary = 0;
+    private Integer salary;
 	
-	@NotNull (message = "部署を選択してください")
+	@NotEmpty (message = "部署を選択してください")
 	private String deptName;
 	
-	@NotNull (message = "パスワードを入力してください")
-	@Size(min = 1, max = 255, message = "パスワードは10文字以内で入力してください")
+	@Size(min = 1, max = 10, message = "パスワードは10文字以内で入力してください")
+	@NotEmpty (message = "パスワードを入力してください")
     private String password;
 	
-	@NotNull (message = "パスワード(確認)を入力してください")
+	@NotEmpty (message = "パスワード(確認)を入力してください")
     private String confirmPassword;
+	
+	@AssertTrue(message = "パスワードとパスワード(確認)が一致しません")
+    public boolean isPasswordValid() {
+		//パスワード入力欄がnullや空のときは確認しない
+        if (password == null || password.isEmpty()) {
+            return true;
+        }
+        //パスワードの入力内容とパスワード(確認用)の入力内容が等しいか比較
+        return password.equals(confirmPassword);
+    } 
 
 	public Integer getEmpId() {
 		return empId;

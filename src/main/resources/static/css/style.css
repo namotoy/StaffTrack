@@ -129,6 +129,13 @@ h2{
 .regist-table td{
 	width:200px;
 }
+
+.regist-table input[type="text"] {
+    width: 100%;
+    box-sizing: border-box;
+    border-color: #FFFFFF;
+}
+
 .regist-guide{
 	font-size: 20px;
 }
