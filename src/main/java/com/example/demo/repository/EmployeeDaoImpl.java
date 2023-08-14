@@ -90,25 +90,25 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		employee.getEmpId(),employee.getEmpName(),employee.getEmail(), employee.getBirthDate(), employee.getSalary(), deptId, employee.getPassword());
 	};
 	
+	// データベースにすでに登録されている従業員IDを取得するメソッド
 	@Override
 	public Optional<Employee> findByEmpId(int empId) {
         try {
-            String sql = "SELECT emp_id, emp_name, email, birth_date, salary, dept_id"
+            String sql = "SELECT emp_id"
                     + " FROM Employee WHERE emp_id = ?";
             Map<String, Object> result = jdbcTemplate.queryForMap(sql, empId);
             Employee employee = new Employee();
             employee.setEmpId((int) result.get("emp_id"));
-            employee.setEmpName((String) result.get("emp_name"));
-            employee.setEmail((String) result.get("email"));
-            java.sql.Date birthDate = (java.sql.Date) result.get("birth_date");
-            employee.setBirthDate(birthDate.toLocalDate());
-            employee.setSalary((int) result.get("salary"));
-            employee.setDeptId((int) result.get("dept_id"));
             // employeeをOptionalでラップする
             return Optional.ofNullable(employee);
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }
 	}
+
+	//従業員IDがすでに存在しているか検証
+	public boolean isEmpIdDuplicated(int empId) {
+        return findByEmpId(empId).isPresent();
+    }
 	
 }

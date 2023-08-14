@@ -30,20 +30,24 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 	}
 	
+	//データベースにすでに登録されている従業員IDを取得
 	@Override
     public Optional<Employee> findByEmpId(int empId) {
         return dao.findByEmpId(empId);
     }
 	
+	//従業員IDがすでに存在しているか検証
 	public boolean isEmpIdDuplicated(int empId) {
-        return dao.findByEmpId(empId).isPresent();
+        return dao.isEmpIdDuplicated(empId);
     }
-
+	
     @Override
     public void insert(Employee employee) throws DuplicateEmpIdException {
+    	//すでに存在する従業員IDを登録しようとするとエラー発生
         if (isEmpIdDuplicated(employee.getEmpId())) {
             throw new DuplicateEmpIdException("従業員IDが重複しています");
         }
+        //入力情報をデータベースへ保存
         dao.insert(employee);
     }
 }

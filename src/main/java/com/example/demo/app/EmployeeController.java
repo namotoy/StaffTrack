@@ -113,7 +113,7 @@ public class EmployeeController {
     	
     	// 従業員IDが既に存在するかチェック
         if(employeeForm.getEmpId() != null && employeeService.findByEmpId(employeeForm.getEmpId()).isPresent()) {
-            result.rejectValue("empId", "duplicate", "この従業員IDは既に存在します");
+            result.rejectValue("empId", "duplicate", "従業員IDが重複しています");
         }
         // エラーがある場合、登録画面に戻る
     	if(result.hasErrors()) {
@@ -137,7 +137,7 @@ public class EmployeeController {
     }
     
     //入力フォームから送信された情報を従業員リストに追加
-    private Employee makeEmployee(EmployeeForm employeeForm) {
+    public Employee makeEmployee(EmployeeForm employeeForm) {
     	Employee employee = new Employee();
     	employee.setEmpId(employeeForm.getEmpId());
     	employee.setEmpName(employeeForm.getEmpName());

@@ -26,7 +26,7 @@ public class EmployeeForm {
 	@NotNull (message = "生年月日を入力してください")
     private LocalDate birthDate;
 	
-	@Digits(integer = 255, fraction = 0, message = "給与は255桁までで入力してください")
+	@Digits(integer = 9, fraction = 0, message = "給与は9桁までで入力してください")
 	@NotNull (message = "給与を入力してください")
     private Integer salary;
 	

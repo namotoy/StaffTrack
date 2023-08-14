@@ -9,5 +9,6 @@ public interface EmployeeDao{
 	List<Employee> findAll();
 	Optional<Employee> findById(int id, String password);
 	Optional<Employee> findByEmpId(int empId);
+	public boolean isEmpIdDuplicated(int empId);
 	void insert(Employee employee);
 }
