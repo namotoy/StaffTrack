@@ -23,8 +23,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	@Override
 	public List<Employee> findAll() {
 		String sql = "SELECT Employee.emp_id, Employee.emp_name, Employee.email, Employee.birth_date, Employee.salary, Employee.dept_id, Department.dept_name"
-				+ " FROM Employee "
-				+ " INNER JOIN Department ON Employee.dept_id = Department.dept_id";
+				+ " FROM Employee " + " INNER JOIN Department ON Employee.dept_id = Department.dept_id";
 		//従業員一覧をMapのListで取得
 		List<Map<String, Object>> resultList = jdbcTemplate.queryForList(sql);
 
@@ -94,8 +93,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	@Override
 	public Optional<Employee> findByEmpId(int empId) {
 		try {
-			String sql = "SELECT emp_id"
-					+ " FROM Employee WHERE emp_id = ?";
+			String sql = "SELECT emp_id" + " FROM Employee WHERE emp_id = ?";
 			Map<String, Object> result = jdbcTemplate.queryForMap(sql, empId);
 			Employee employee = new Employee();
 			employee.setEmpId((int) result.get("emp_id"));

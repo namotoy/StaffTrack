@@ -3,10 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-	crossorigin="anonymous">
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
 <title>従業員登録確認</title>
 </head>
@@ -44,17 +41,16 @@
 				</tbody>
 			</table>
 			<form th:action="@{/StaffTrack/emp_regist_complete}" method="post">
-				<input type="hidden" th:value="${employee.empId}" name="empId" /> <input
-					type="hidden" th:value="${employee.empName}" name="empName" /> <input
-					type="hidden" th:value="${employee.email}" name="email" /> <input
-					type="hidden" th:value="${employee.birthDate}" name="birthDate" />
+				<input type="hidden" th:value="${employee.empId}" name="empId" /> 
+				<input type="hidden" th:value="${employee.empName}" name="empName" />
+				<input type="hidden" th:value="${employee.email}" name="email" />
+				<input type="hidden" th:value="${employee.birthDate}" name="birthDate" />
 				<input type="hidden" th:value="${employee.salary}" name="salary" />
 				<input type="hidden" th:value="${employee.deptName}" name="deptName" />
 				<input type="hidden" th:value="${employee.password}" name="password" />
 				<div class="regist-confirm">
 					<button type="submit" class="btn btn-primary btn-regist">登録</button>
-					<a th:href="@{/StaffTrack/emp_regist}"><button type="button"
-							class="btn btn-light btn-return">戻る</button></a>
+					<a th:href="@{/StaffTrack/emp_regist}"><button type="button" class="btn btn-light btn-return">戻る</button></a>
 				</div>
 			</form>
 		</div>

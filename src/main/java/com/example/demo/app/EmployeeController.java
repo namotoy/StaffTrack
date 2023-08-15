@@ -110,8 +110,7 @@ public class EmployeeController {
 
 	// 登録画面から確認画面への遷移
 	@PostMapping("/emp_regist_confirm")
-	public String transitConfirm(@Valid @ModelAttribute EmployeeForm employeeForm,
-			BindingResult result, Model model) {
+	public String transitConfirm(@Valid @ModelAttribute EmployeeForm employeeForm,BindingResult result, Model model) {
 
 		// 従業員IDが既に存在するかチェック
 		if(employeeForm.getEmpId() != null && employeeService.findByEmpId(employeeForm.getEmpId()).isPresent()) {
