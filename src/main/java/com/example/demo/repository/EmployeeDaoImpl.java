@@ -19,21 +19,21 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	public EmployeeDaoImpl(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
-	
+
 	@Override
 	public List<Employee> findAll() {
 		String sql = "SELECT Employee.emp_id, Employee.emp_name, Employee.email, Employee.birth_date, Employee.salary, Employee.dept_id, Department.dept_name"
 				+ " FROM Employee "
 				+ " INNER JOIN Department ON Employee.dept_id = Department.dept_id";
-		 //従業員一覧をMapのListで取得
+		//従業員一覧をMapのListで取得
 		List<Map<String, Object>> resultList = jdbcTemplate.queryForList(sql);
-		
+
 		//return用の空のリストを用意	
 		List<Employee> list = new ArrayList<Employee>();
-		
+
 		//resultListの中身を取り出し、resultに格納
 		for(Map<String,Object> result : resultList) {
-			
+
 			Employee employee = new Employee();
 			employee.setEmpId((int)result.get("emp_id"));
 			employee.setEmpName((String)result.get("emp_name"));
@@ -42,15 +42,15 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			employee.setBirthDate(birthDate.toLocalDate());
 			employee.setSalary((int)result.get("salary"));
 			employee.setDeptId((int)result.get("dept_id"));
-			
+
 			Department department = new Department();
 			department.setDeptId((int)result.get("dept_id"));
 			department.setDeptName((String)result.get("dept_name"));
-			
+
 			//EmployeeにDepartmentをセットしてテーブルを結合
 			employee.setDepartment(department);
 			//Employeeをlistに追加
-		    list.add(employee);
+			list.add(employee);
 		}
 		return list;
 	}
@@ -74,41 +74,41 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 		return employeeOpt;
 	}
-	
+
 	// dept_nameからdept_idを取得するメソッド
 	public int getDeptIdByName(String deptName) {
-	    String sql = "SELECT dept_id FROM department WHERE dept_name = ?";
-	    return jdbcTemplate.queryForObject(sql, Integer.class, deptName);
+		String sql = "SELECT dept_id FROM department WHERE dept_name = ?";
+		return jdbcTemplate.queryForObject(sql, Integer.class, deptName);
 	}
-	
+
 	@Override
 	public void insert(Employee employee) {
 		// dept_nameからdept_idを取得
-	    int deptId = getDeptIdByName(employee.getDeptName());
-	    // employeeテーブルにデータを挿入
+		int deptId = getDeptIdByName(employee.getDeptName());
+		// employeeテーブルにデータを挿入
 		jdbcTemplate.update("INSERT INTO employee(emp_Id, emp_name, email, birth_date, salary, dept_id, password) VALUES(?, ?, ?, ?, ?, ?, ?)",
-		employee.getEmpId(),employee.getEmpName(),employee.getEmail(), employee.getBirthDate(), employee.getSalary(), deptId, employee.getPassword());
+				employee.getEmpId(),employee.getEmpName(),employee.getEmail(), employee.getBirthDate(), employee.getSalary(), deptId, employee.getPassword());
 	};
-	
+
 	// データベースにすでに登録されている従業員IDを取得するメソッド
 	@Override
 	public Optional<Employee> findByEmpId(int empId) {
-        try {
-            String sql = "SELECT emp_id"
-                    + " FROM Employee WHERE emp_id = ?";
-            Map<String, Object> result = jdbcTemplate.queryForMap(sql, empId);
-            Employee employee = new Employee();
-            employee.setEmpId((int) result.get("emp_id"));
-            // employeeをOptionalでラップする
-            return Optional.ofNullable(employee);
-        } catch (EmptyResultDataAccessException e) {
-            return Optional.empty();
-        }
+		try {
+			String sql = "SELECT emp_id"
+					+ " FROM Employee WHERE emp_id = ?";
+			Map<String, Object> result = jdbcTemplate.queryForMap(sql, empId);
+			Employee employee = new Employee();
+			employee.setEmpId((int) result.get("emp_id"));
+			// employeeをOptionalでラップする
+			return Optional.ofNullable(employee);
+		} catch (EmptyResultDataAccessException e) {
+			return Optional.empty();
+		}
 	}
 
 	//従業員IDがすでに存在しているか検証
 	public boolean isEmpIdDuplicated(int empId) {
-        return findByEmpId(empId).isPresent();
-    }
-	
+		return findByEmpId(empId).isPresent();
+	}
+
 }

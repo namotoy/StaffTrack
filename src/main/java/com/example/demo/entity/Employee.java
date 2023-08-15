@@ -8,23 +8,23 @@ import jakarta.validation.constraints.NotNull;
 public class Employee {
 	@NotNull(message = "従業員IDは必須です")
 	private Integer empId;
-    private String empName;
-    private String email;
-    private LocalDate birthDate;
-    private Integer salary;
-    private Integer deptId;
-    private String deptName;
-  
-    @NotEmpty(message = "パスワードは必須です")
-    private String password;
-    private Department department;
-    
+	private String empName;
+	private String email;
+	private LocalDate birthDate;
+	private Integer salary;
+	private Integer deptId;
+	private String deptName;
+
+	@NotEmpty(message = "パスワードは必須です")
+	private String password;
+	private Department department;
+
 	public Integer getEmpId() {
-        return empId;
-    }
-    public void setEmpId(Integer empId) {
-        this.empId = empId;
-    }
+		return empId;
+	}
+	public void setEmpId(Integer empId) {
+		this.empId = empId;
+	}
 	public String getEmpName() {
 		return empName;
 	}
@@ -73,5 +73,5 @@ public class Employee {
 	public void setDeptName(String deptName) {
 		this.deptName = deptName;
 	}
-	
+
 }

@@ -13,42 +13,42 @@ public class EmployeeForm {
 	@Digits(integer = 8, fraction = 0, message = "従業員IDは8桁までの数値で入力してください")
 	@NotNull  (message = "従業員IDを入力してください")
 	private Integer empId;
-	
+
 	@Size(min = 1, max = 20, message = "従業員名は20文字以内で入力してください")
 	@NotEmpty (message = "従業員名を入力してください")
-    private String empName;
-	
+	private String empName;
+
 	@Size(min = 1, max = 255, message = "メールアドレスは255文字以内で入力してください")
 	@NotEmpty (message = "メールアドレスを入力してください")
-    private String email;
-	
+	private String email;
+
 	@Past(message = "生年月日は有効な日付を入力してください")
 	@NotNull (message = "生年月日を入力してください")
-    private LocalDate birthDate;
-	
+	private LocalDate birthDate;
+
 	@Digits(integer = 9, fraction = 0, message = "給与は9桁までで入力してください")
 	@NotNull (message = "給与を入力してください")
-    private Integer salary;
-	
+	private Integer salary;
+
 	@NotEmpty (message = "部署を選択してください")
 	private String deptName;
-	
+
 	@Size(min = 1, max = 10, message = "パスワードは10文字以内で入力してください")
 	@NotEmpty (message = "パスワードを入力してください")
-    private String password;
-	
+	private String password;
+
 	@NotEmpty (message = "パスワード(確認)を入力してください")
-    private String confirmPassword;
-	
+	private String confirmPassword;
+
 	@AssertTrue(message = "パスワードとパスワード(確認)が一致しません")
-    public boolean isPasswordValid() {
+	public boolean isPasswordValid() {
 		//パスワード入力欄がnullや空のときは確認しない
-        if (password == null || password.isEmpty()) {
-            return true;
-        }
-        //パスワードの入力内容とパスワード(確認用)の入力内容が等しいか比較
-        return password.equals(confirmPassword);
-    } 
+		if (password == null || password.isEmpty()) {
+			return true;
+		}
+		//パスワードの入力内容とパスワード(確認用)の入力内容が等しいか比較
+		return password.equals(confirmPassword);
+	} 
 
 	public Integer getEmpId() {
 		return empId;
@@ -113,5 +113,5 @@ public class EmployeeForm {
 	public void setConfirmPassword(String confirmPassword) {
 		this.confirmPassword = confirmPassword;
 	}
-	
+
 }
