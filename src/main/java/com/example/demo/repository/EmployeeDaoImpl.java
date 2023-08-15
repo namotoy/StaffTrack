@@ -23,7 +23,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	@Override
 	public List<Employee> findAll() {
 		String sql = "SELECT Employee.emp_id, Employee.emp_name, Employee.email, Employee.birth_date, Employee.salary, Employee.dept_id, Department.dept_name"
-				+ " FROM Employee " + " INNER JOIN Department ON Employee.dept_id = Department.dept_id";
+		+ " FROM Employee " + " INNER JOIN Department ON Employee.dept_id = Department.dept_id";
 		//従業員一覧をMapのListで取得
 		List<Map<String, Object>> resultList = jdbcTemplate.queryForList(sql);
 
@@ -86,7 +86,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		int deptId = getDeptIdByName(employee.getDeptName());
 		// employeeテーブルにデータを挿入
 		jdbcTemplate.update("INSERT INTO employee(emp_Id, emp_name, email, birth_date, salary, dept_id, password) VALUES(?, ?, ?, ?, ?, ?, ?)",
-				employee.getEmpId(),employee.getEmpName(),employee.getEmail(), employee.getBirthDate(), employee.getSalary(), deptId, employee.getPassword());
+		employee.getEmpId(),employee.getEmpName(),employee.getEmail(), employee.getBirthDate(), employee.getSalary(), deptId, employee.getPassword());
 	};
 
 	// データベースにすでに登録されている従業員IDを取得するメソッド
