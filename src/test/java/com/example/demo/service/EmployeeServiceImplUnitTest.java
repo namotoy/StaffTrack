@@ -19,6 +19,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import com.example.demo.entity.Employee;
 import com.example.demo.repository.EmployeeDao;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -30,6 +31,9 @@ public class EmployeeServiceImplUnitTest {
 	@Mock 
 	private EmployeeDao dao;
 
+	@Mock 
+	private HttpSession mockSession;
+	
 	@InjectMocks
 	private EmployeeServiceImpl employeeServiceImpl;
 
@@ -133,6 +137,46 @@ public class EmployeeServiceImplUnitTest {
 			fail("Expected EmployeeNotFoundException was not thrown.");
 		} catch (EmployeeNotFoundException e) {
 			// Expected exception
+		 }
+	 }	 
+	 
+	 @Test
+     @DisplayName("ログアウトを実行した場合、セッションが無効化されるテスト")
+    public void userLogoutSessionInvalidated() {
+			 // メソッドを実行
+	        employeeServiceImpl.userLogout(mockSession);
+	
+	        // セッションが無効化されるかどうかを検証
+	        verify(mockSession, times(1)).invalidate();
+		    }
+	 
+	 @Test
+     @DisplayName("セッションが既に無効化されており、ログアウトが失敗するテスト")
+	 public void testUserLogoutWithAlreadyInvalidatedSession() {
+	        // セッションが無効化された状態を設定
+	        doThrow(new IllegalStateException()).when(mockSession).invalidate();
+	        
+	        // メソッドが呼び出されたときに不正（IllegalStateException）が発生することを検証
+	        assertThrows(IllegalStateException.class, () -> {
+	        	employeeServiceImpl.userLogout(mockSession);
+	        	
+        	// 無効化メソッドが1回呼び出されたことを確認
+        	verify(mockSession, times(1)).invalidate();
+	        });
+	    }
+	 
+	 @Test
+	 @DisplayName("ログアウト処理中に例外が発生することを確認するテスト")
+	 public void testSessionAlreadyInvalidatedErrorHandling() {
+		 	// セッションがすでに無効化されている場合にスローされる例外を設定
+		    doThrow(new IllegalStateException("セッションがすでに無効化されています")).when(mockSession).invalidate();
+
+		    // ログアウトで発生する例外を受け取る
+		    Exception exception = assertThrows(IllegalStateException.class, () -> {
+		        employeeServiceImpl.userLogout(mockSession);
+		    });
+
+		    // 発生する例外メッセージと設定した例外メッセージが同一になるか検証
+		    assertEquals("セッションがすでに無効化されています", exception.getMessage());
 		}
-	}
-}
+ }
