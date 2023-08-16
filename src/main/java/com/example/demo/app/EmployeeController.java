@@ -159,4 +159,10 @@ public class EmployeeController {
 		employee.setPassword(employeeForm.getPassword());
 		return employee;
 	}
+	
+	// 従業員検索画面への遷移
+		@GetMapping("/emp_search")
+		public String showEmpSearch(Model model) {
+			return "emp_search";
+		}
 }

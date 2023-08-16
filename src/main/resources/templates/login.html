@@ -10,7 +10,7 @@
 <body>
 	<div class="container">
 		<h1 class="page-title">ログイン</h1>
-		<form th:action="@{/StaffTrack/userLogin}" th:object="${employee}" method="post">
+		<form th:action="@{/StaffTrack/login}" th:object="${employee}" method="post">
 			<div class="error" th:if="${#fields.hasErrors('empId')}" th:errors="*{empId}"></div>
 			<div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
 			<div th:if="${errorMessage}" th:text="${errorMessage}" class="error"></div>
@@ -24,11 +24,9 @@
 					<p class="">パスワード</p>
 					<input type="text" class="" th:field="*{password}">
 				</div>
-			</div>
-			<!-- エラーメッセージが存在する場合にのみ表示 -->
-			<br>
-			<div>
-				<input type="submit" class="btn btn-primary" value="ログイン">
+				<div>
+					<input type="submit" class="btn btn-primary" value="ログイン">
+				</div>
 			</div>
 		</form>
 	</div>
