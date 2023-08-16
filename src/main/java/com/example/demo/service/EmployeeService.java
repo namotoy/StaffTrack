@@ -10,5 +10,8 @@ import jakarta.servlet.http.HttpSession;
 public interface EmployeeService {
 	List<Employee> findAll();
 	Optional<Employee> userLogin(int id, String password);
+	Optional<Employee> findByEmpId(int empId);
+	public boolean isEmpIdDuplicated(int empId);
+	void insert(Employee employee);
 	public void userLogout(HttpSession session);
 }

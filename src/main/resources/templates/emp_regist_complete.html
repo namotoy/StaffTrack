@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+<title>従業員登録完了</title>
+</head>
+<body>
+	<div class="container">
+		<h1 class="page-title">従業員登録</h1>
+		<div class="contents">
+			<div class="regist-guide">以下の内容で登録しました</div>
+			<table class="regist-table">
+				<tbody>
+					<tr>
+						<th>従業員ID</th>
+						<td th:text="${employee.empId}"></td>
+					</tr>
+					<tr>
+						<th>従業員名</th>
+						<td th:text="${employee.empName}"></td>
+					</tr>
+					<tr>
+						<th>メールアドレス</th>
+						<td th:text="${employee.email}"></td>
+					</tr>
+					<tr>
+						<th>生年月日</th>
+						<td th:text="${employee.birthDate}"></td>
+					</tr>
+					<tr>
+						<th>給与</th>
+						<td th:text="${employee.salary}"></td>
+					</tr>
+					<tr>
+						<th>部署</th>
+						<td th:text="${employee.deptName}"></td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="regist-confirm">
+				<a th:href="@{/StaffTrack/menu}"><button type="button" class="btn btn-light">メニューへ戻る</button></a>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

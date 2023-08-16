@@ -1,24 +1,24 @@
 package com.example.demo.entity;
 
 public class Department {
-    private int deptId;
+	private int deptId;
 
-    private String deptName;
+	private String deptName;
 
-    public int getDeptId() {
-        return deptId;
-    }
+	public int getDeptId() {
+		return deptId;
+	}
 
-    public void setDeptId(int deptId) {
-        this.deptId = deptId;
-    }
+	public void setDeptId(int deptId) {
+		this.deptId = deptId;
+	}
 
-    public String getDeptName() {
-        return deptName;
-    }
+	public String getDeptName() {
+		return deptName;
+	}
 
-    public void setDeptName(String deptName) {
-        this.deptName = deptName;
-    }
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
 
 }
