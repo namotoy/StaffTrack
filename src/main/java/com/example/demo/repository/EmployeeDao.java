@@ -7,8 +7,10 @@ import com.example.demo.entity.Employee;
 
 public interface EmployeeDao{
 	List<Employee> findAll();
-	Optional<Employee> findById(int id, String password);
+	Optional<Employee> findbyuser(int id, String password);
 	Optional<Employee> findByEmpId(int empId);
 	public boolean isEmpIdDuplicated(int empId);
 	void insert(Employee employee);
+	Optional<Employee> findById(int empId);
+	List<Employee>findByName(String empName);
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -69,7 +70,6 @@ public class EmployeeController {
 			redirectAttributes.addFlashAttribute("errorMessage", "IDまたはパスワードに誤りがあります");
 			return "redirect:/login";
 		}
-
 	}
 
 	// メニュー画面への遷移
@@ -162,7 +162,33 @@ public class EmployeeController {
 	
 	// 従業員検索画面への遷移
 		@GetMapping("/emp_search")
-		public String showEmpSearch(Model model) {
+		public String showEmpSearch(Employee employee, Model model) {
+			return "emp_search";
+		}
+		
+	// 従業員IDで検索後の検索画面遷移
+		@PostMapping("/emp_search")
+		// 従業員名で検索後の画面遷移
+		public String findByName(@RequestParam String empName, Model model) {
+		    // 従業員リストを取得
+		    List<Employee> list = employeeService.findByName(empName);
+		    // DBから取得した従業員情報が0件の場合、エラーメッセージを表示
+		    if (list.isEmpty()) {
+		        model.addAttribute("errorMessage", "検索条件に該当する従業員は見つかりません");
+		    }
+		    model.addAttribute("list", list);
+		    return "emp_search";
+		}
+		
+		@PostMapping("/emp_search_id")
+		public String findById(@RequestParam int empId, Model model) {
+			//従業員IDを取得
+			Optional<Employee> searchEmpId = employeeService.findById(empId);
+			//DBから取得した従業員情報が0件の場合、エラーメッセージを表示
+			if (searchEmpId.isEmpty()) {
+				model.addAttribute("errorMessage", "検索条件に該当する従業員は見つかりません");
+			}
+			model.addAttribute("searchEmployee", searchEmpId);
 			return "emp_search";
 		}
 }

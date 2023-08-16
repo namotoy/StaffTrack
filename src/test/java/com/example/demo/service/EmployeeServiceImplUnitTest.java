@@ -127,8 +127,8 @@ public class EmployeeServiceImplUnitTest {
 		int id = 12345;  // 仮のIDを設定
 		String password = "password";  //仮のパスワードを設定
 
-		//daoクラスのfindByIdメソッドが呼び出された時、少なくとも1つの結果が戻り値として返ってくる指定
-		when(dao.findById(id,password)).thenThrow(new EmptyResultDataAccessException(1));
+		//daoクラスのfindByUserメソッドが呼び出された時、少なくとも1つの結果が戻り値として返ってくる指定
+		when(dao.findbyuser(id,password)).thenThrow(new EmptyResultDataAccessException(1));
 
 		//IDとPWが取得できないとEmployeeNotFoundExceptionが発生することを検査
 		try {
