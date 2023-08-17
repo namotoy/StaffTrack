@@ -1,10 +1,8 @@
 package com.example.demo.service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
@@ -80,9 +78,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public List<Employee>findByName(String empName){
 		try {
 	        return dao.findByName(empName);
-	    } catch (DataAccessException e) {
-	        System.err.println("検索条件に該当する従業員は見つかりません" + e.getMessage());
-	        return Collections.emptyList();
-	    }
+		} catch (EmptyResultDataAccessException e) {
+			//無ければ例外発生
+			throw new EmployeeNotFoundException("検索条件に該当する従業員は見つかりません");
+		}
 	};
 }

@@ -14,19 +14,16 @@
 			<a th:href="@{/StaffTrack/menu}"><button type="button">＜＜メニュー画面に戻る</button></a>
 		</div>
 		<div class="contents">
-			<form th:action="@{/StaffTrack/emp_list_searchId}" th:object="${employee}" method="post">
+			<form th:action="@{/StaffTrack/emp_list}" th:object="${employee}" method="post">
 				<div class="input-search-field">
-					<div>従業員ID</div>
-					<input type="text" class="input-search" th:field="*{empId}">
-				</div>
-				<input type="submit" class="btn btn-primary" value="検索">
-			</form>
-			<form th:action="@{/StaffTrack/emp_list_searchName}" th:object="${employee}" method="post">
-				<div class="input-search-field">
-					<div>従業員名</div>
-					<input type="text" class="input-search" th:field="*{empName}">
-				</div>
-				<input type="submit" class="btn btn-primary" value="検索">
+			        <div>従業員ID</div>
+			        <input type="text" class="input-search" th:field="*{empId}">
+			    </div>
+			    <div class="input-search-field">
+			        <div>従業員名</div>
+			        <input type="text" class="input-search" th:field="*{empName}">
+			    </div>
+			    <input type="submit" class="btn btn-primary" value="検索">
 			</form>
 		</div>
 		<div th:unless="${errorMessage}">
