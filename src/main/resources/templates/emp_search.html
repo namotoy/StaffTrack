@@ -13,22 +13,21 @@
 			<a th:href="@{/StaffTrack/menu}"><button type="button">＜＜メニュー画面に戻る</button></a>
 		</div>
 		<div class="contents">
+			<div class="page-guide">検索したい従業員IDまたは従業員名を入力してください</div>
 			<form th:action="@{/StaffTrack/emp_search_id}" th:object="${employee}" method="post">
-				<div class="input-field">
+				<div class="input-search-field">
 					<div>従業員ID</div>
 					<input type="text" class="input-search" th:field="*{empId}">
 				</div>
-				<div>
-					<input type="submit" class="btn btn-primary" value="検索">
-				</div>
+				<input type="submit" class="btn btn-primary" value="検索">
 			</form>
-			<form th:action="@{/StaffTrack/emp_search}" th:object="${employee}" method="post">
-				<div class="input-field">
+			<form th:action="@{/StaffTrack/emp_search_name}" th:object="${employee}" method="post">
+				<div class="input-search-field">
 					<div>従業員名</div>
-					<input type="text" class="input-search" th:field="*{empName}">
+					<input type="text" class="input-search_name" th:field="*{empName}">
 				</div>
+				<input type="submit" class="btn btn-primary" value="検索">
 			</form>
-				<br>
 		</div>
 		<h2 class="page-title">検索結果</h2>	
 		<div th:unless="${errorMessage}">
@@ -56,13 +55,13 @@
 						<td><a th:href="@{#}"><button type="button" class="">更新</button></a></td>
 						<td><a th:href="@{#}"><button type="button" class="">削除</button></a></td>
 					</tr>
-					<tr th:object="${searchEmployee}">
-						<td th:text="${searchEmployee.get().empId}"></td>
-						<td th:text="${searchEmployee.get().empName}"></td>
-						<td th:text="${searchEmployee.get().email}"></td>
-						<td th:text="${searchEmployee.get().birthDate}"></td>
-						<td th:text="${searchEmployee.get().salary}"></td>
-						<td th:text="${searchEmployee.get().department.deptName}"></td>
+					<tr th:if="${searchEmployee != null}" th:object="${searchEmployee}">
+						<td th:text="*{empId}"></td>
+						<td th:text="*{empName}"></td>
+						<td th:text="*{email}"></td>
+						<td th:text="*{birthDate}"></td>
+						<td th:text="*{salary}"></td>
+						<td th:text="*{department.deptName}"></td>
 						<td><a th:href="@{#}"><button type="button" class="">更新</button></a></td>
 						<td><a th:href="@{#}"><button type="button" class="">削除</button></a></td>
 					</tr>
