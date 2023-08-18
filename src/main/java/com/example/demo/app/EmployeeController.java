@@ -182,7 +182,7 @@ public class EmployeeController {
 				} 
 			} 
 			// ユーザーが名前で検索した場合
-			if (empName != null && !empName.isEmpty()) {
+			if (empName != null) {
 				List<Employee> list = employeeService.findByName(empName);
 				// 該当する従業員情報を画面に表示する
 				if (!list.isEmpty()) {
@@ -211,7 +211,7 @@ public class EmployeeController {
 				} 
 			} 
 			// ユーザーが名前で検索した場合
-			if (empName != null && !empName.isEmpty()) {
+			if (empName != null) {
 				List<Employee> list = employeeService.findByName(empName);
 				// 該当する従業員情報を画面に表示する
 				if (!list.isEmpty()) {
