@@ -170,42 +170,29 @@ public class EmployeeController {
 		public String searchEmployee(@RequestParam(required = false) Integer empId, 
 		                             @RequestParam(required = false) String empName, 
 		                             Model model) {
-		    try {
-		        // ユーザーがIDで検索した場合
-		        if (empId != null) {
-		            Optional<Employee> searchEmpId = employeeService.findById(empId);
-		            
-		            // 該当する従業員が見つかった場合、その情報を画面に表示する
-		            if (searchEmpId.isPresent()) {
-		                Employee searchEmployee = searchEmpId.get();       
-		                model.addAttribute("searchEmployee", searchEmployee);
-		                return "emp_search";
-		            } 
-		        }
-		    } catch (EmployeeNotFoundException e) {
-		        // 該当する従業員がいなかった場合のエラーメッセージ
-		        model.addAttribute("errorMessage", e.getMessage());
-		        return "emp_search";
-		    }
-		    
-		    // ユーザーが名前で検索した場合
-		    if (empName != null && !empName.isEmpty()) {
-		        List<Employee> list = employeeService.findByName(empName);
-		        
-		        // 該当する従業員情報を画面に表示する
-		        if (!list.isEmpty()) {
-		            model.addAttribute("list", list);
-		            return "emp_search";
-		        } else {
-		            // 該当する従業員がいなかった場合のエラーメッセージ
-		            model.addAttribute("errorMessage", "検索条件に該当する従業員は見つかりません");
-		            return "emp_search";
-		        }
-		    }
-		    
-		    // 何も検索条件が入力されていない場合、または検索結果が見つからなかった場合
-		    model.addAttribute("errorMessage", "検索条件に該当する従業員は見つかりません");
-		    return "emp_search";  
+			// ユーザーがIDで検索した場合
+			if (empId != null) {
+				Optional<Employee> searchEmpId = employeeService.findById(empId);
+
+				// 該当する従業員情報を画面に表示する
+				if (searchEmpId.isPresent()) {
+					Employee searchEmployee = searchEmpId.get();       
+					model.addAttribute("searchEmployee", searchEmployee);
+					return "emp_search";
+				} 
+			} 
+			// ユーザーが名前で検索した場合
+			if (empName != null && !empName.isEmpty()) {
+				List<Employee> list = employeeService.findByName(empName);
+				// 該当する従業員情報を画面に表示する
+				if (!list.isEmpty()) {
+					model.addAttribute("list", list);
+					return "emp_search";
+				} 
+			}
+			// 何も検索条件が入力されていない場合、または検索結果が見つからなかった場合
+			model.addAttribute("errorMessage", "検索条件に該当する従業員は見つかりません");
+			return "emp_search";  
 		}
 
 		// 従業員一覧画面での検索結果への遷移
@@ -213,41 +200,27 @@ public class EmployeeController {
 		public String searchEmployeeInList(@RequestParam(required = false) Integer empId, 
 		                                   @RequestParam(required = false) String empName, 
 		                                   Model model) {
-			try {
-		        // ユーザーがIDで検索した場合
-		        if (empId != null) {
-		            Optional<Employee> searchEmpId = employeeService.findById(empId);
-		            
-		            // 該当する従業員が見つかった場合、その情報を画面に表示する
-		            if (searchEmpId.isPresent()) {
-		                Employee searchEmployee = searchEmpId.get();       
-		                model.addAttribute("searchEmployee", searchEmployee);
-		                return "emp_list";
-		            } 
-		        }
-		    } catch (EmployeeNotFoundException e) {
-		        // 該当する従業員がいなかった場合のエラーメッセージ
-		        model.addAttribute("errorMessage", e.getMessage());
-		        return "emp_list";
-		    }
-		    
-		    // ユーザーが名前で検索した場合
-		    if (empName != null && !empName.isEmpty()) {
-		        List<Employee> list = employeeService.findByName(empName);
-		        
-		        // 該当する従業員情報を画面に表示する
-		        if (!list.isEmpty()) {
-		            model.addAttribute("list", list);
-		            return "emp_list";
-		        } else {
-		            // 該当する従業員がいなかった場合のエラーメッセージ
-		            model.addAttribute("errorMessage", "検索条件に該当する従業員は見つかりません");
-		            return "emp_list";
-		        }
-		    }
-		    
-		    // 何も検索条件が入力されていない場合、または検索結果が見つからなかった場合
-		    model.addAttribute("errorMessage", "検索条件に該当する従業員は見つかりません");
-		    return "emp_list";  
+			// ユーザーがIDで検索した場合
+			if (empId != null) {
+				Optional<Employee> searchEmpId = employeeService.findById(empId);
+				// 該当する従業員情報を画面に表示する
+				if (searchEmpId.isPresent()) {
+					Employee searchEmployee = searchEmpId.get();       
+					model.addAttribute("searchEmployee", searchEmployee);
+					return "emp_list";
+				} 
+			} 
+			// ユーザーが名前で検索した場合
+			if (empName != null && !empName.isEmpty()) {
+				List<Employee> list = employeeService.findByName(empName);
+				// 該当する従業員情報を画面に表示する
+				if (!list.isEmpty()) {
+					model.addAttribute("list", list);
+					return "emp_list";
+				} 
+			}
+			// 何も検索条件が入力されていない場合、または検索結果が見つからなかった場合
+			model.addAttribute("errorMessage", "検索条件に該当する従業員は見つかりません");
+			return "emp_list";  
 		}
 }
