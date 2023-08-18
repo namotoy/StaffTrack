@@ -14,4 +14,6 @@ public interface EmployeeService {
 	public boolean isEmpIdDuplicated(int empId);
 	void insert(Employee employee);
 	public void userLogout(HttpSession session);
+	Optional<Employee> findById(int empId);
+	List<Employee>findByName(String empName);
 }

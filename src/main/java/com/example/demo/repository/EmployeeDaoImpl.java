@@ -54,7 +54,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		return list;
 	}
 
-	public Optional<Employee> findById(int id, String password){
+	public Optional<Employee> findbyuser(int id, String password){
 		String sql = "SELECT emp_id, emp_name, email, birth_date, salary, dept_id, password"
 				+ " FROM Employee WHERE emp_id = ? AND password = ? ";
 		Map<String, Object> result = jdbcTemplate.queryForMap(sql, id, password);
@@ -108,5 +108,63 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	public boolean isEmpIdDuplicated(int empId) {
 		return findByEmpId(empId).isPresent();
 	}
+	
+	// DBから従業員IDに合致した従業員情報を1件取得
+	@Override
+	public Optional<Employee> findById(int empId){
+		String sql ="SELECT emp_id, emp_name, email, birth_date, salary, Employee.dept_id, password, Department.dept_name"
+				+ " FROM Employee INNER JOIN Department ON Employee.dept_id = Department.dept_id"
+				+ " WHERE emp_id = ? ";
+		Map<String, Object> result = jdbcTemplate.queryForMap(sql, empId);
+		Employee employee = new Employee();
+		employee.setEmpId((int)result.get("emp_id"));
+		employee.setEmpName((String)result.get("emp_name"));
+		employee.setEmail((String)result.get("email"));
+		java.sql.Date birthDate = (java.sql.Date) result.get("birth_date");
+		employee.setBirthDate(birthDate.toLocalDate());
+		employee.setSalary((int)result.get("salary"));
+		employee.setDeptId((int)result.get("dept_id"));
+		employee.setPassword((String)result.get("password"));
+		Department department = new Department();
+		department.setDeptId((int)result.get("dept_id"));
+		department.setDeptName((String)result.get("dept_name"));
+		//EmployeeにDepartmentをセットしてテーブルを結合
+		employee.setDepartment(department);
+		
+		Optional<Employee> searchEmployee = Optional.ofNullable(employee);
+		return searchEmployee;
+	};
+	
+	// DBから従業員名に合致した従業員情報を全件取得
+	@Override
+	public List<Employee>findByName(String empName){
+		String sql = "SELECT emp_id, emp_name, email, birth_date, salary, Employee.dept_id, password, Department.dept_name"
+				+ " FROM Employee INNER JOIN Department ON Employee.dept_id = Department.dept_id"
+				+ " WHERE emp_name = ? ";
+		
+		//合致した従業員情報をMapのListで取得
+		List<Map<String, Object>> resultList = jdbcTemplate.queryForList(sql, empName);
+		//return用の空のリストを用意	
+		List<Employee> list = new ArrayList<Employee>();
+		//resultListの中身を取り出し、resultに格納
+		for(Map<String,Object> result : resultList) {
+			Employee employee = new Employee();
+			employee.setEmpId((int)result.get("emp_id"));
+			employee.setEmpName((String)result.get("emp_name"));
+			employee.setEmail((String)result.get("email"));
+			java.sql.Date birthDate = (java.sql.Date) result.get("birth_date");
+			employee.setBirthDate(birthDate.toLocalDate());
+			employee.setSalary((int)result.get("salary"));
+			employee.setDeptId((int)result.get("dept_id"));
+			Department department = new Department();
+			department.setDeptId((int)result.get("dept_id"));
+			department.setDeptName((String)result.get("dept_name"));
+
+			//EmployeeにDepartmentをセットしてテーブルを結合
+			employee.setDepartment(department);
+			list.add(employee);
+		}
+		return list;
+	};
 
 }

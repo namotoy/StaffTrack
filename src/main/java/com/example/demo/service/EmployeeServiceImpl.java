@@ -26,7 +26,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public Optional<Employee> userLogin(int id, String password) throws EmployeeNotFoundException {
 		//データ1件を取得してidとpasswoordがあるか検証。無ければ例外発生
 		try {
-			return dao.findById(id, password);
+			return dao.findbyuser(id, password);
 		} catch (EmptyResultDataAccessException e) {
 			throw new EmployeeNotFoundException("IDまたはパスワードに誤りがあります");
 		}
@@ -59,5 +59,28 @@ public class EmployeeServiceImpl implements EmployeeService {
 	        // セッションを無効化
 	        session.invalidate();
 	    }
+	};
+	
+	// findByIdメソッドを呼び出し、検索結果があった場合となかった場合で処理を記述
+	@Override
+	public Optional<Employee> findById(int empId){
+		//データ1件を取得してempIdがあるか検証
+		try {
+			return dao.findById(empId);
+		} catch (EmptyResultDataAccessException e) {
+		//無ければ例外発生
+			throw new EmployeeNotFoundException("検索条件に該当する従業員は見つかりません");
+		}
+	};
+	
+	// findByNameメソッドを呼び出し、検索結果があった場合となかった場合で処理を記述
+	@Override
+	public List<Employee>findByName(String empName){
+		try {
+	        return dao.findByName(empName);
+		} catch (EmptyResultDataAccessException e) {
+			//無ければ例外発生
+			throw new EmployeeNotFoundException("検索条件に該当する従業員は見つかりません");
+		}
 	};
 }
