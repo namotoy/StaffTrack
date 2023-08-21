@@ -2,6 +2,7 @@ package com.example.demo.app;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -93,7 +94,7 @@ public class EmployeeController {
   
     // 従業員一覧画面への遷移
     @GetMapping("/emp_list")
-    public String showEmpList(Model model, HttpSession session) {
+    public String showEmpList(Model model) {
     	//ログインしていないユーザーが直接従業員一覧ページへアクセスした場合、ログインページへ遷移
 //    	User user = (User) session.getAttribute("user");
 //        if (user == null) {
@@ -222,5 +223,41 @@ public class EmployeeController {
 			// 何も検索条件が入力されていない場合、または検索結果が見つからなかった場合
 			model.addAttribute("errorMessage", "検索条件に該当する従業員は見つかりません");
 			return "emp_list";  
+		}
+		
+		// 従業員削除画面への遷移
+		@GetMapping("/emp_delete")
+		public String showEmpDelete(Employee employee, Model model) {
+			// 実際の従業員IDのリストをデータベースから取得
+		    List<Employee> employees = employeeService.findAll();
+		    // すべての従業員からIDだけを取得
+		    List<Integer> empIds = employees.stream().map(Employee::getEmpId).collect(Collectors.toList());
+		    model.addAttribute("empIds", empIds);
+		    return "emp_delete";
+		}
+		
+		// 登録画面から確認画面への遷移
+		@PostMapping("/emp_delete_confirm")
+		public String transitDeleteConfirm(@ModelAttribute Employee selectedEmployee, Model model) {
+			if (selectedEmployee.getEmpId() == null) {
+		        model.addAttribute("errorMessage", "検索条件に該当する従業員は見つかりません");
+		        List<Employee> employees = employeeService.findAll();
+		        List<Integer> empIds = employees.stream().map(Employee::getEmpId).collect(Collectors.toList());
+		        model.addAttribute("empIds", empIds);
+		        return "emp_delete"; 
+		    }
+			
+			// 選択された従業員IDを元にデータベースから完全な従業員情報を取得
+		    Optional<Employee> fullEmployeeOpt = employeeService.findById(selectedEmployee.getEmpId());
+		        model.addAttribute("employee", fullEmployeeOpt.get());
+		        return "emp_delete_confirm";
+		}
+		
+		// 確認画面から完了画面への遷移
+		@PostMapping("/emp_delete_complete")
+		public String delete(@ModelAttribute Employee selectedEmployee, Model model) {
+		    // データベースの従業員情報を削除
+		    employeeService.delete(selectedEmployee.getEmpId());
+		    return "emp_delete_complete";
 		}
 }

@@ -166,5 +166,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		}
 		return list;
 	};
-
+	
+	public int delete(int empId) {
+		return jdbcTemplate.update("DELETE FROM Employee WHERE emp_id = ?", empId);
+	};
 }
