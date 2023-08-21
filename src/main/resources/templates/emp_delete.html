@@ -15,7 +15,6 @@
 		</div>
 		<div class="contents">
 			<form th:action="@{/StaffTrack/emp_delete_confirm}" th:object="${employee}" method="post">
-				<!-- <div class="error" th:if="${#fields.hasErrors('empId')}" th:errors="*{empId}"></div> -->
 				<div class="page-guide">削除したい従業員情報を入力してください</div>
 				<div class="error" th:if="${errorMessage}" th:text="${errorMessage}"></div>
 				<table class="regist-table">

@@ -29,7 +29,6 @@ public class EmployeeController {
 
 	private final EmployeeService employeeService;
 
-
 	public EmployeeController(EmployeeService employeeService) {
 		this.employeeService = employeeService;
 	}
@@ -87,7 +86,6 @@ public class EmployeeController {
     public String userLogout(HttpSession session, RedirectAttributes attributes) {
     	//userLogoutメソッドを呼び出す
     	employeeService.userLogout(session);
-    	
         // ログイン画面にリダイレクト
         return "redirect:/login";
     }
@@ -100,7 +98,6 @@ public class EmployeeController {
 //        if (user == null) {
 //        	return "redirect:/login";
 //        }
-        
         //従業員リストを取得
 		List<Employee> list = employeeService.findAll();
 		//DBから取得した従業員情報が0件の場合、エラーメッセージを表示
@@ -118,7 +115,6 @@ public class EmployeeController {
 		model.addAttribute("employeeForm", new EmployeeForm());
 		return "emp_regist";
 	}
-
 	// 登録画面から確認画面への遷移
 	@PostMapping("/emp_regist_confirm")
 	public String transitConfirm(@Valid @ModelAttribute EmployeeForm employeeForm,BindingResult result, Model model) {
@@ -160,10 +156,9 @@ public class EmployeeController {
 		employee.setPassword(employeeForm.getPassword());
 		return employee;
 	}
-	
 	// 従業員検索画面への遷移
 		@GetMapping("/emp_search")
-		public String showEmpSearch(Employee employee, Model model) {
+		public String showEmpSearch() {
 			return "emp_search";
 		}
 	// 従業員検索画面での検索結果への遷移
@@ -246,7 +241,6 @@ public class EmployeeController {
 		        model.addAttribute("empIds", empIds);
 		        return "emp_delete"; 
 		    }
-			
 			// 選択された従業員IDを元にデータベースから完全な従業員情報を取得
 		    Optional<Employee> fullEmployeeOpt = employeeService.findById(selectedEmployee.getEmpId());
 		        model.addAttribute("employee", fullEmployeeOpt.get());
