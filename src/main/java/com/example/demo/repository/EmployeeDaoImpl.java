@@ -26,13 +26,10 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		+ " FROM Employee " + " INNER JOIN Department ON Employee.dept_id = Department.dept_id";
 		//従業員一覧をMapのListで取得
 		List<Map<String, Object>> resultList = jdbcTemplate.queryForList(sql);
-
 		//return用の空のリストを用意	
 		List<Employee> list = new ArrayList<Employee>();
-
 		//resultListの中身を取り出し、resultに格納
 		for(Map<String,Object> result : resultList) {
-
 			Employee employee = new Employee();
 			employee.setEmpId((int)result.get("emp_id"));
 			employee.setEmpName((String)result.get("emp_name"));
@@ -41,11 +38,9 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			employee.setBirthDate(birthDate.toLocalDate());
 			employee.setSalary((int)result.get("salary"));
 			employee.setDeptId((int)result.get("dept_id"));
-
 			Department department = new Department();
 			department.setDeptId((int)result.get("dept_id"));
 			department.setDeptName((String)result.get("dept_name"));
-
 			//EmployeeにDepartmentをセットしてテーブルを結合
 			employee.setDepartment(department);
 			//Employeeをlistに追加
@@ -67,10 +62,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		employee.setSalary((int)result.get("salary"));
 		employee.setDeptId((int)result.get("dept_id"));
 		employee.setPassword((String)result.get("password"));
-
 		//employeeをOptionalでラップする
 		Optional<Employee> employeeOpt = Optional.ofNullable(employee);
-
 		return employeeOpt;
 	}
 
@@ -130,7 +123,6 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		department.setDeptName((String)result.get("dept_name"));
 		//EmployeeにDepartmentをセットしてテーブルを結合
 		employee.setDepartment(department);
-		
 		Optional<Employee> searchEmployee = Optional.ofNullable(employee);
 		return searchEmployee;
 	};
@@ -141,7 +133,6 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		String sql = "SELECT emp_id, emp_name, email, birth_date, salary, Employee.dept_id, password, Department.dept_name"
 				+ " FROM Employee INNER JOIN Department ON Employee.dept_id = Department.dept_id"
 				+ " WHERE emp_name = ? ";
-		
 		//合致した従業員情報をMapのListで取得
 		List<Map<String, Object>> resultList = jdbcTemplate.queryForList(sql, empName);
 		//return用の空のリストを用意	
@@ -159,7 +150,6 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			Department department = new Department();
 			department.setDeptId((int)result.get("dept_id"));
 			department.setDeptName((String)result.get("dept_name"));
-
 			//EmployeeにDepartmentをセットしてテーブルを結合
 			employee.setDepartment(department);
 			list.add(employee);
