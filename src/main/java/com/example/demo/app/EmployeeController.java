@@ -219,7 +219,7 @@ public class EmployeeController {
 			return "emp_list";  
 		}
 		
-		// 従業員削除画面への遷移
+		// 削除選択画面への遷移
 		@GetMapping("/emp_delete")
 		public String showEmpDelete(Employee employee, Model model) {
 			// 実際の従業員IDのリストをデータベースから取得
@@ -228,22 +228,26 @@ public class EmployeeController {
 		    return "emp_delete";
 		}
 		
-		// 登録画面から確認画面への遷移
+		// 削除選択から削除確認への遷移
 		@PostMapping("/emp_delete_confirm")
 		public String transitDeleteConfirm(Integer empId, Model model) {
-			if (empId == null) {
-		        model.addAttribute("errorMessage", "検索条件に該当する従業員は見つかりません");
-		        List<Employee> employees = employeeService.findAll();
-		        model.addAttribute("employees", employees);
-		        return "emp_delete"; 
-		    }
-			// 選択された従業員IDを元にデータベースから完全な従業員情報を取得
-		    Optional<Employee> fullEmployeeOpt = employeeService.findById(empId);
-		        model.addAttribute("employee", fullEmployeeOpt.get());
-		        return "emp_delete_confirm";
+			if (empId != null) {
+				//従業員IDが指定されている場合
+				//選択された従業員IDを元にデータベースから従業員情報を取得
+				Optional<Employee> fullEmployeeOpt = employeeService.findById(empId);
+				model.addAttribute("employee", fullEmployeeOpt.get());
+				return "emp_delete_confirm";
+			} else {
+				//従業員IDが指定されていない場合
+				model.addAttribute("errorMessage", "検索条件に該当する従業員は見つかりません");
+				//従業員の一覧を取得してモデルに追加
+				List<Employee> employees = employeeService.findAll();
+				model.addAttribute("employees", employees);
+				return "emp_delete"; 
+			}
 		}
 		
-		// 確認画面から完了画面への遷移
+		// 削除確認から削除完了への遷移
 		@PostMapping("/emp_delete_complete")
 		public String delete(Integer empId, Model model) {
 		    // データベースの従業員情報を削除
