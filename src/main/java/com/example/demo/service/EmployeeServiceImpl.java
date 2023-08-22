@@ -83,4 +83,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 			throw new EmployeeNotFoundException("検索条件に該当する従業員は見つかりません");
 		}
 	};
+	
+	public void update(Employee employee) {
+		//従業員情報を削除。従業員IDがなければ例外発生
+		if(dao.update(employee)==0) {
+			throw new EmployeeNotFoundException("検索条件に該当する従業員は見つかりません");
+		}
+	}
 }

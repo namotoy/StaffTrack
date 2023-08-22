@@ -16,4 +16,5 @@ public interface EmployeeService {
 	public void userLogout(HttpSession session);
 	Optional<Employee> findById(int empId);
 	List<Employee>findByName(String empName);
+	public void update(Employee employee);
 }
