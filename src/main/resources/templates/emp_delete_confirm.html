@@ -42,12 +42,6 @@
 			</table>
 			<form th:action="@{/StaffTrack/emp_delete_complete}" method="post">
 				<input type="hidden" th:value="${employee.empId}" name="empId" /> 
-				<input type="hidden" th:value="${employee.empName}" name="empName" />
-				<input type="hidden" th:value="${employee.email}" name="email" />
-				<input type="hidden" th:value="${employee.birthDate}" name="birthDate" />
-				<input type="hidden" th:value="${employee.salary}" name="salary" />
-				<input type="hidden" th:value="${employee.deptName}" name="deptName" />
-				<input type="hidden" th:value="${employee.password}" name="password" />
 				<div class="regist-confirm">
 					<button type="submit" class="btn btn-primary btn-regist">削除</button>
 					<a th:href="@{/StaffTrack/emp_delete}"><button type="button" class="btn btn-light btn-return">戻る</button></a>

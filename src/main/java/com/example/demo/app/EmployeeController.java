@@ -2,7 +2,6 @@ package com.example.demo.app;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -225,33 +224,30 @@ public class EmployeeController {
 		public String showEmpDelete(Employee employee, Model model) {
 			// 実際の従業員IDのリストをデータベースから取得
 		    List<Employee> employees = employeeService.findAll();
-		    // すべての従業員からIDだけを取得
-		    List<Integer> empIds = employees.stream().map(Employee::getEmpId).collect(Collectors.toList());
-		    model.addAttribute("empIds", empIds);
+		    model.addAttribute("employees", employees);
 		    return "emp_delete";
 		}
 		
 		// 登録画面から確認画面への遷移
 		@PostMapping("/emp_delete_confirm")
-		public String transitDeleteConfirm(@ModelAttribute Employee selectedEmployee, Model model) {
-			if (selectedEmployee.getEmpId() == null) {
+		public String transitDeleteConfirm(Integer empId, Model model) {
+			if (empId == null) {
 		        model.addAttribute("errorMessage", "検索条件に該当する従業員は見つかりません");
 		        List<Employee> employees = employeeService.findAll();
-		        List<Integer> empIds = employees.stream().map(Employee::getEmpId).collect(Collectors.toList());
-		        model.addAttribute("empIds", empIds);
+		        model.addAttribute("employees", employees);
 		        return "emp_delete"; 
 		    }
 			// 選択された従業員IDを元にデータベースから完全な従業員情報を取得
-		    Optional<Employee> fullEmployeeOpt = employeeService.findById(selectedEmployee.getEmpId());
+		    Optional<Employee> fullEmployeeOpt = employeeService.findById(empId);
 		        model.addAttribute("employee", fullEmployeeOpt.get());
 		        return "emp_delete_confirm";
 		}
 		
 		// 確認画面から完了画面への遷移
 		@PostMapping("/emp_delete_complete")
-		public String delete(@ModelAttribute Employee selectedEmployee, Model model) {
+		public String delete(Integer empId, Model model) {
 		    // データベースの従業員情報を削除
-		    employeeService.delete(selectedEmployee.getEmpId());
+		    employeeService.delete(empId);
 		    return "emp_delete_complete";
 		}
 }

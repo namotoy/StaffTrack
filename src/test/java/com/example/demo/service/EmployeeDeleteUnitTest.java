@@ -68,8 +68,12 @@ public class EmployeeDeleteUnitTest {
 		// 従業員IDが存在しないとモックする
 		when(dao.delete(nonEmployeeId)).thenReturn(0);
 		// deleteメソッドがEmployeeNotFoundExceptionをスローすることを検証
-		assertThrows(EmployeeNotFoundException.class, () -> {
-			service.delete(nonEmployeeId);
-		});
+		try {
+	        service.delete(nonEmployeeId);
+	        //例外がスローされない場合はテストが失敗
+	        fail("Expected an EmployeeNotFoundException to be thrown");
+	    } catch (EmployeeNotFoundException e) {
+	        // 予想通り例外がスローされテスト成功
+	    }
 	}
 }
