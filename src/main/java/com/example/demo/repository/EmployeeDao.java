@@ -13,4 +13,5 @@ public interface EmployeeDao{
 	void insert(Employee employee);
 	Optional<Employee> findById(int empId);
 	List<Employee>findByName(String empName);
+	public int delete(int empId);
 }
