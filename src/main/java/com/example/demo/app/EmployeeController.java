@@ -252,39 +252,34 @@ public class EmployeeController {
 				return "emp_update"; 
 			}
 		}
-
 		
 		// 変更登録画面から変更確認画面への遷移
 		@PostMapping("/emp_update_confirm")
 		public String transitUpateConfirm(@Valid @ModelAttribute EmployeeForm employeeForm,BindingResult result, Model model) {
-//			System.out.println(result);
 			// 従業員IDが既に存在するかチェック
-//			if(employeeForm.getEmpId() != null && employeeService.findByEmpId(employeeForm.getEmpId()).isPresent()) {
-//				result.rejectValue("empId", "duplicate", "従業員IDが重複しています");
-//			}
-			// エラーがある場合、登録画面に戻る
+			if(employeeForm.getEmpId() != null && employeeService.findByEmpId(employeeForm.getEmpId()).isPresent()) {
+				result.rejectValue("empId", "duplicate", "すでに存在している従業員IDです");
+			}
 			if(result.hasErrors()) {
+				// エラーがある場合、登録画面に戻る
 				model.addAttribute("employeeForm", employeeForm);
 				return "emp_update_input"; 
 			} else {
-			// エラーがない場合、確認画面に進む
-			model.addAttribute("employee", employeeForm);
-			return "emp_update_confirm"; 
+				// エラーがない場合、確認画面に進む
+				model.addAttribute("employee", employeeForm);
+				return "emp_update_confirm"; 
 			}
 		}
 		
 		// 変更確認画面から変更完了画面への遷移
 		@PostMapping("/emp_update_complete")
 		public String update(EmployeeForm employeeForm, int empId, Model model) {
-			System.out.println(employeeForm);
 			// EmployeeFormからEmployeeオブジェクトを作成
 			Employee employee = makeEmployee(employeeForm); 
-			System.out.println(employee);
-			// データベースの従業員情報を更新
-			employeeService.update(employee);
 			// Modelにemployeeオブジェクトを追加
 			model.addAttribute("employee", employee);
-			System.out.println(employee.getEmpId());
+			// データベースの従業員情報を更新
+			employeeService.update(employee);
 			return "emp_update_complete";
 		}
 }
