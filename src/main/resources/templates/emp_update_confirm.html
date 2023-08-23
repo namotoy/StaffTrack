@@ -36,11 +36,11 @@
 					</tr>
 					<tr>
 						<th>部署</th>
-						<td th:text="${employee.department.deptName}"></td>
+						<!-- <td th:text="${employee.department.deptName}"></td> -->
 					</tr>
 				</tbody>
 			</table>
-			<form th:action="@{/StaffTrack/emp_delete_complete}" method="post">
+			<form th:action="@{/StaffTrack/emp_update_complete}" method="post">
 				<input type="hidden" th:value="${employee.empId}" name="empId" /> 
 				<input type="hidden" th:value="${employee.empName}" name="empName" />
 				<input type="hidden" th:value="${employee.email}" name="email" />
