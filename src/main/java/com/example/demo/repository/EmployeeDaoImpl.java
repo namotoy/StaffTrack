@@ -170,7 +170,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	public int update(Employee employee){
 		// dept_nameからdept_idを取得
 		int deptId = getDeptIdByName(employee.getDeptName());
-		return jdbcTemplate.update("UPDATE employee SET emp_Id = ?, emp_name = ?, email = ?, birth_date = ?, salary = ?, password = ?, WHERE emp_id = ?",
-				employee.getEmpId(),employee.getEmpName(),employee.getEmail(), employee.getBirthDate(), employee.getSalary(), deptId, employee.getPassword());
+		return jdbcTemplate.update("UPDATE employee SET emp_name = ?, email = ?, birth_date = ?, salary = ?, dept_id = ?, password = ? WHERE emp_id = ?",
+				employee.getEmpName(),employee.getEmail(), employee.getBirthDate(), employee.getSalary(), deptId, employee.getPassword(), employee.getEmpId());	
 	};
 }

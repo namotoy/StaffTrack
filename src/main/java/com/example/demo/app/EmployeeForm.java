@@ -2,7 +2,6 @@ package com.example.demo.app;
 
 import java.time.LocalDate;
 
-import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -37,10 +36,10 @@ public class EmployeeForm {
 	@NotEmpty (message = "パスワードを入力してください")
 	private String password;
 
-	@NotEmpty (message = "パスワード(確認)を入力してください")
+//	@NotEmpty (message = "パスワード(確認)を入力してください")
 	private String confirmPassword;
 
-	@AssertTrue(message = "パスワードとパスワード(確認)が一致しません")
+//	@AssertTrue(message = "パスワードとパスワード(確認)が一致しません")
 	public boolean isPasswordValid() {
 		//パスワード入力欄がnullや空のときは確認しない
 		if (password == null || password.isEmpty()) {
