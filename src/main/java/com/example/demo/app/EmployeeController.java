@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.demo.entity.Employee;
 import com.example.demo.service.EmployeeNotFoundException;
 import com.example.demo.service.EmployeeService;
+import com.mysql.cj.util.StringUtils;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -233,20 +234,20 @@ public class EmployeeController {
 			return "emp_update";
 		}
 		
-		// 変更画面から変更登録画面への遷移
+		// 変更選択画面から変更入力画面への遷移
 		@PostMapping("/emp_update_input")
-		public String transitUpdateInput(Integer empId, Model model) {
-			System.out.println(empId);
+		public String transitUpdateInput(Integer empId, Model model,HttpSession session) {
 			if (empId != null) {
 				//従業員IDが指定されている場合
 				//選択された従業員IDを元にデータベースから従業員情報を取得
 				Optional<Employee> fullEmployeeOpt = employeeService.findById(empId);
 				model.addAttribute("employeeForm", fullEmployeeOpt.get());
+				session.setAttribute("beforeEmpId", empId);
 				return "emp_update_input";
 			} else {
 				//従業員IDが指定されていない場合
 				model.addAttribute("errorMessage", "検索条件に該当する従業員は見つかりません");
-				//従業員の一覧を取得してモデルに追加
+				//従業員の一覧を取得してModelに追加
 				List<Employee> employees = employeeService.findAll();
 				model.addAttribute("employees", employees);
 				return "emp_update"; 
@@ -255,18 +256,34 @@ public class EmployeeController {
 		
 		// 変更登録画面から変更確認画面への遷移
 		@PostMapping("/emp_update_confirm")
-		public String transitUpateConfirm(@Valid @ModelAttribute EmployeeForm employeeForm,BindingResult result, Model model) {
-			// 従業員IDが既に存在するかチェック
-			if(employeeForm.getEmpId() != null && employeeService.findByEmpId(employeeForm.getEmpId()).isPresent()) {
-				result.rejectValue("empId", "duplicate", "すでに存在している従業員IDです");
+		public String transitUpateConfirm(@Valid @ModelAttribute EmployeeForm employeeForm,
+										  BindingResult result,
+										  @RequestParam("password") String password,
+										  @RequestParam("confirmPassword") String confirmPassword,
+										  Model model,HttpSession session) {
+			// パスワードエラーの検証
+			if (StringUtils.isNullOrEmpty(confirmPassword)) {
+				model.addAttribute("confirmPasswordError", "パスワード(確認)を入力してください");
+			} else if (!password.equals(confirmPassword)) {
+				model.addAttribute("confirmPasswordError", "パスワードとパスワード(確認)が一致しません");
 			}
-			if(result.hasErrors()) {
-				// エラーがある場合、登録画面に戻る
+			
+			//従業員IDの変更がないか検証
+			Integer beforeEmpId = (Integer) session.getAttribute("beforeEmpId");
+			
+			if (!beforeEmpId.equals(employeeForm.getEmpId())) {
+				//　従業員IDの変更がないか検証
+		        model.addAttribute("empIdError", "従業員IDが変更されています");
+		        return "emp_update_input"; 
+		    } else if(result.hasErrors()) {
+				// 入力エラーがある場合、登録画面に戻る
 				model.addAttribute("employeeForm", employeeForm);
 				return "emp_update_input"; 
 			} else {
 				// エラーがない場合、確認画面に進む
-				model.addAttribute("employee", employeeForm);
+				Employee employee = makeEmployee(employeeForm); 
+				// Modelにemployeeオブジェクトを追加
+				model.addAttribute("employee", employee);
 				return "emp_update_confirm"; 
 			}
 		}

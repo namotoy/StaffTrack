@@ -12,6 +12,7 @@
 		<h1 class="page-title">従業員変更</h1>
 		<div class="contents">
 			<form th:action="@{/StaffTrack/emp_update_confirm}" th:object="${employeeForm}" method="post">
+				<div class="error" th:if="${empIdError}" th:text="${empIdError}"></div>
 				<div class="error" th:if="${#fields.hasErrors('empId')}" th:errors="*{empId}"></div>
 				<div class="error" th:if="${#fields.hasErrors('empName')}" th:errors="*{empName}"></div>
 				<div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
@@ -19,8 +20,7 @@
 				<div class="error" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}"></div>
 				<div class="error" th:if="${#fields.hasErrors('deptName')}" th:errors="*{deptName}"></div>
 				<div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
-				<!-- <div class="error" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></div> -->
-				<!-- <div class="error" th:if="${#fields.hasErrors('passwordValid')}" th:errors="*{passwordValid}"></div> -->
+				<div class="error" th:if="${confirmPasswordError}" th:text="${confirmPasswordError}"></div>
 				<div class="page-guide">変更する従業員情報を入力してください</div>
 				<table class="regist-table">
 					<tbody>
@@ -55,12 +55,14 @@
 						</tr>
 						<tr>
 							<th>パスワード</th>
-							<td><input type="text" th:field="*{password}"></td>
+							<td>
+							<input type="password" th:field="*{password}">
+							</td>
 						</tr>
 						<tr>
 							<th>パスワード(確認)</th>
 							<td>
-								<input type="text">
+							<input type="password" name="confirmPassword">
 							</td>
 						</tr>
 					</tbody>
