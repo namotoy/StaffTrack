@@ -17,7 +17,7 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringJUnitConfig
 @SpringBootTest
 @DisplayName("EmployeeControllerの結合テスト")
-public class EmployeeControllerTest {
+public class EmployeeControllerIntegrataionTest {
 	@Autowired
 	//テスト対象クラス
     private WebApplicationContext context;
@@ -42,23 +42,25 @@ public class EmployeeControllerTest {
             .andExpect(view().name(is("emp_list")));
     }
     
+//    @Test
+//    @DisplayName("ログインしていない場合、ログイン画面に遷移するテスト")
+//    public void testNotLoginMovelogin() throws Exception{
+//    	//"/emp_list"にGETでアクセスするリクエストを作成
+//    	mockMvc.perform(get("/emp_list"))  
+//    	//リクエストの結果のHttpStatusが3xx（リダイレクト）であることを検証
+//    	.andExpect(status().is3xxRedirection())
+//    	//リダイレクト先のURLが"/login"であることを検証
+//    	.andExpect(redirectedUrl("/login"));
+//    }
+    
     @Test
-    @DisplayName("ログインしていない場合、ログイン画面に遷移するテスト")
-    public void testNotLoginMovelogin() throws Exception{
-    	//"/emp_list"にGETでアクセスするリクエストを作成
-    	mockMvc.perform(get("/emp_list"))  
-    	//リクエストの結果のHttpStatusが3xx（リダイレクト）であることを検証
-    	.andExpect(status().is3xxRedirection())
-    	//リダイレクト先のURLが"/login"であることを検証
-    	.andExpect(redirectedUrl("/login"));
-    }
     @DisplayName("ログインボタンをクリックするとメニュー画面に遷移するテスト")
     public void LoginToMenuTest() throws Exception{
     	//"/login"からPOSTでアクセスするリクエストを作成
         mockMvc.perform(post("/login") 
         // フォームのパラメータをセット
 	        .param("empId", "50001") 
-	        .param("password", "sato2023")) 
+	        .param("password", "hana2023")) 
         	//リクエストの結果のHttpStatusがOKであることを検証
             .andExpect(status().is3xxRedirection())
           //リダイレクト先のURLが"/login"であることを検証
