@@ -174,3 +174,4 @@ public class EmployeeDaoImpl implements EmployeeDao {
 				employee.getEmpName(),employee.getEmail(), employee.getBirthDate(), employee.getSalary(), deptId, employee.getPassword(), employee.getEmpId());	
 	};
 }
+

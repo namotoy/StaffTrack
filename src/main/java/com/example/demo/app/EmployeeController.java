@@ -227,7 +227,7 @@ public class EmployeeController {
 		
 		// 従業員変更画面への遷移
 		@GetMapping("/emp_update")
-		public String showEmpUpdate(Employee employee, Model model) {
+		public String showEmpUpdate(Model model) {
 			// 実際の従業員IDのリストをデータベースから取得
 			List<Employee> employees = employeeService.findAll();
 			model.addAttribute("employees", employees);
@@ -290,9 +290,7 @@ public class EmployeeController {
 		
 		// 変更確認画面から変更完了画面への遷移
 		@PostMapping("/emp_update_complete")
-		public String update(EmployeeForm employeeForm, int empId, Model model) {
-			// EmployeeFormからEmployeeオブジェクトを作成
-			Employee employee = makeEmployee(employeeForm); 
+		public String update(Employee employee, Model model){
 			// Modelにemployeeオブジェクトを追加
 			model.addAttribute("employee", employee);
 			// データベースの従業員情報を更新
