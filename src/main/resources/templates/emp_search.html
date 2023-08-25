@@ -17,11 +17,11 @@
 			<form th:action="@{/StaffTrack/emp_search}" th:object="${employee}" method="post">
 			    <div class="input-search-field">
 			        <div>従業員ID</div>
-			        <input type="text" class="input-search" th:field="*{empId}">
+			        <input type="text" class="input-search" name="empId" >
 			    </div>
 			    <div class="input-search-field">
 			        <div>従業員名</div>
-			        <input type="text" class="input-search" th:field="*{empName}">
+			        <input type="text" class="input-search" name="empName" >
 			    </div>
 			    <input type="submit" class="btn btn-primary" value="検索">
 			</form>

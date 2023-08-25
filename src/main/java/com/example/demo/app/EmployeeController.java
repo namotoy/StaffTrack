@@ -94,13 +94,12 @@ public class EmployeeController {
   
     // 従業員一覧画面への遷移
     @GetMapping("/emp_list")
-    public String showEmpList(Model model, HttpSession session) {
+    public String showEmpList(Model model) {
     	//ログインしていないユーザーが直接従業員一覧ページへアクセスした場合、ログインページへ遷移
 //    	User user = (User) session.getAttribute("user");
 //        if (user == null) {
 //        	return "redirect:/login";
 //        }
-        
         //従業員リストを取得
 		List<Employee> list = employeeService.findAll();
 		//DBから取得した従業員情報が0件の場合、エラーメッセージを表示
@@ -108,7 +107,6 @@ public class EmployeeController {
 			model.addAttribute("errorMessage", "従業員情報の取得に失敗しました");
 		}
 		model.addAttribute("list", list);
-		model.addAttribute("title", "従業員一覧");
 		return "emp_list";
 	}
 
