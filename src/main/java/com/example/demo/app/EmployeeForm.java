@@ -32,7 +32,10 @@ public class EmployeeForm {
 
 	@NotEmpty (message = "部署を選択してください")
 	private String deptName;
+	
 
+	private int deptId;
+	
 	@Size(min = 1, max = 10, message = "パスワードは10文字以内で入力してください")
 	@NotEmpty (message = "パスワードを入力してください")
 	private String password;
@@ -49,14 +52,7 @@ public class EmployeeForm {
 		//パスワードの入力内容とパスワード(確認用)の入力内容が等しいか比較
 		return password.equals(confirmPassword);
 	} 
-
-	public Integer getEmpId() {
-		return empId;
-	}
-
-	public void setEmpId(Integer empId) {
-		this.empId = empId;
-	}
+	
 
 	public String getEmpName() {
 		return empName;
@@ -112,6 +108,20 @@ public class EmployeeForm {
 
 	public void setConfirmPassword(String confirmPassword) {
 		this.confirmPassword = confirmPassword;
+	}
+	public Integer getEmpId() {
+		return empId;
+	}
+	
+	public void setEmpId(Integer empId) {
+		this.empId = empId;
+	}
+	public int getDeptId() {
+		return deptId;
+	}
+		
+	public void setDeptId(int deptId) {
+		this.deptId = deptId;
 	}
 
 }

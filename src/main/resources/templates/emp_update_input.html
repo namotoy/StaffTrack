@@ -12,7 +12,6 @@
 		<h1 class="page-title">従業員変更</h1>
 		<div class="contents">
 			<form th:action="@{/StaffTrack/emp_update_confirm}" th:object="${employeeForm}" method="post">
-				<div class="error" th:if="${empIdError}" th:text="${empIdError}"></div>
 				<div class="error" th:if="${#fields.hasErrors('empId')}" th:errors="*{empId}"></div>
 				<div class="error" th:if="${#fields.hasErrors('empName')}" th:errors="*{empName}"></div>
 				<div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
@@ -20,29 +19,30 @@
 				<div class="error" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}"></div>
 				<div class="error" th:if="${#fields.hasErrors('deptName')}" th:errors="*{deptName}"></div>
 				<div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
-				<div class="error" th:if="${confirmPasswordError}" th:text="${confirmPasswordError}"></div>
+				<div class="error" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></div>
+				<div class="error" th:if="${#fields.hasErrors('passwordValid')}" th:errors="*{passwordValid}"></div>
 				<div class="page-guide">変更する従業員情報を入力してください</div>
 				<table class="regist-table">
 					<tbody>
 						<tr>
 							<th>従業員ID</th>
-							<td><input type="text" th:field="*{empId}"></td>
+							<td><input type="text" name = "empId" th:value= "*{empId}"></td>
 						</tr>
 						<tr>
 							<th>従業員名</th>
-							<td><input type="text" th:field="*{empName}"></td>
+							<td><input type="text" name = "empName" th:value= "*{empName}"></td>
 						</tr>
 						<tr>
 							<th>メールアドレス</th>
-							<td><input type="text" th:field="*{email}"></td>
+							<td><input type="text" name = "email" th:value= "*{email}"></td>
 						</tr>
 						<tr>
 							<th>生年月日</th>
-							<td><input type="text" th:field="*{birthDate}" th:value="${employeeForm.birthDate}"></td>
+							<td><input type="text" name = "birthDate" th:value="*{birthDate}"></td>
 						</tr>
 						<tr>
 							<th>給与</th>
-							<td><input type="text" th:field="*{salary}"></td>
+							<td><input type="text"  name = "salary" th:value= "*{salary}"></td>
 						</tr>
 						<tr>
 							<th>部署</th>
@@ -56,13 +56,13 @@
 						<tr>
 							<th>パスワード</th>
 							<td>
-							<input type="password" th:field="*{password}">
+							<input type="password"  name = "password" >
 							</td>
 						</tr>
 						<tr>
 							<th>パスワード(確認)</th>
 							<td>
-							<input type="password" name="confirmPassword">
+							<input type="password"  name = "confirmPassword">
 							</td>
 						</tr>
 					</tbody>
