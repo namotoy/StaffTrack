@@ -151,7 +151,6 @@ public class EmployeeController {
 		employee.setBirthDate(employeeForm.getBirthDate());
 		employee.setSalary(employeeForm.getSalary());
 		employee.setDeptName(employeeForm.getDeptName());
-		employee.setDeptId(employeeForm.getDeptId());
 		employee.setPassword(employeeForm.getPassword());
 		return employee;
 	}
