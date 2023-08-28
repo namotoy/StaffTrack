@@ -33,7 +33,6 @@ public class EmployeeForm {
 	@NotEmpty (message = "部署を選択してください")
 	private String deptName;
 	
-
 	private int deptId;
 	
 	@Size(min = 1, max = 10, message = "パスワードは10文字以内で入力してください")

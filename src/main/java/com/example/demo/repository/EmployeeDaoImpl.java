@@ -75,6 +75,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	}
 
 	// dept_nameからdept_idを取得するメソッド
+	
 	public int getDeptIdByName(String deptName) {
 		String sql = "SELECT dept_id FROM department WHERE dept_name = ?";
 		return jdbcTemplate.queryForObject(sql, Integer.class, deptName);
@@ -170,8 +171,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	public int update(Employee employee){
 		// dept_nameからdept_idを取得
 		int deptId = getDeptIdByName(employee.getDeptName());
+		System.out.println(deptId);
 		return jdbcTemplate.update("UPDATE employee SET emp_name = ?, email = ?, birth_date = ?, salary = ?, dept_id = ?, password = ? WHERE emp_id = ?",
 				employee.getEmpName(),employee.getEmail(), employee.getBirthDate(), employee.getSalary(), deptId, employee.getPassword(), employee.getEmpId());	
 	};
 }
-

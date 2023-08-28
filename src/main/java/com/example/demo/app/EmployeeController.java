@@ -25,9 +25,7 @@ import jakarta.validation.Valid;
 @SessionAttributes("employee")
 @RequestMapping("/StaffTrack")
 public class EmployeeController {
-
 	private final EmployeeService employeeService;
-
 
 	public EmployeeController(EmployeeService employeeService) {
 		this.employeeService = employeeService;
@@ -86,7 +84,6 @@ public class EmployeeController {
     public String userLogout(HttpSession session, RedirectAttributes attributes) {
     	//userLogoutメソッドを呼び出す
     	employeeService.userLogout(session);
-    	
         // ログイン画面にリダイレクト
         return "redirect:/login";
     }
@@ -154,6 +151,7 @@ public class EmployeeController {
 		employee.setBirthDate(employeeForm.getBirthDate());
 		employee.setSalary(employeeForm.getSalary());
 		employee.setDeptName(employeeForm.getDeptName());
+		employee.setDeptId(employeeForm.getDeptId());
 		employee.setPassword(employeeForm.getPassword());
 		return employee;
 	}
@@ -234,13 +232,10 @@ public class EmployeeController {
 		// 変更選択画面から変更入力画面への遷移
 		@PostMapping("/emp_update_input")
 		public String transitUpdateInput(Integer empId, EmployeeForm employeeForm, Model model,HttpSession session) {
-			
-			
 			if (empId != null) {
 				//従業員IDが指定されている場合
 				//選択された従業員IDを元にデータベースから従業員情報を取得
 				Optional<Employee> fullEmployeeOpt = employeeService.findById(empId);
-				
 				Optional<EmployeeForm> EmployeeOpt;
 				
 				if (fullEmployeeOpt.isPresent()) {
@@ -248,7 +243,6 @@ public class EmployeeController {
 				} else {
 					EmployeeOpt = Optional.empty();
 				}
-				
 				
 				if (EmployeeOpt.isPresent()) {
 					employeeForm = EmployeeOpt.get();
@@ -262,7 +256,6 @@ public class EmployeeController {
 				model.addAttribute("errorMessage", "検索条件に該当する従業員は見つかりません");
 				//従業員の一覧を取得してModelに追加
 				List<Employee> employees = employeeService.findAll();
-				
 				
 				model.addAttribute("employees", employees);
 				return "emp_update"; 
@@ -297,7 +290,7 @@ public class EmployeeController {
 		
 		// 変更確認画面から変更完了画面への遷移
 		@PostMapping("/emp_update_complete")
-		public String update(EmployeeForm employeeForm, Model model){
+		public String update(@ModelAttribute EmployeeForm employeeForm, Model model){
 			// Modelにemployeeオブジェクトを追加
 			Employee employee = makeEmployee(employeeForm); 
 			model.addAttribute("employee", employee);
@@ -308,15 +301,14 @@ public class EmployeeController {
 		
 		private EmployeeForm makeEmployeeForm(Employee employee) {
 			EmployeeForm employeeForm = new EmployeeForm();
-			
 			employeeForm.setEmpId(employee.getEmpId());
 			employeeForm.setEmpName(employee.getEmpName());
 			employeeForm.setEmail(employee.getEmail());
 			employeeForm.setBirthDate(employee.getBirthDate());
 			employeeForm.setSalary(employee.getSalary());
-			employeeForm.setDeptId(employee.getEmpId());
+			employeeForm.setDeptId(employee.getDeptId());
 			employeeForm.setPassword(employee.getPassword());
-			
 			return employeeForm;
 		}
 }
+
