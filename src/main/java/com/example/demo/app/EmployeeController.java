@@ -25,7 +25,6 @@ import jakarta.validation.Valid;
 @SessionAttributes("employee")
 @RequestMapping("/StaffTrack")
 public class EmployeeController {
-
 	private final EmployeeService employeeService;
 
 	public EmployeeController(EmployeeService employeeService) {
@@ -107,7 +106,6 @@ public class EmployeeController {
 			model.addAttribute("errorMessage", "従業員情報の取得に失敗しました");
 		}
 		model.addAttribute("list", list);
-		model.addAttribute("title", "従業員一覧");
 		return "emp_list";
 	}
 
@@ -120,7 +118,7 @@ public class EmployeeController {
 	// 登録画面から確認画面への遷移
 	@PostMapping("/emp_regist_confirm")
 	public String transitConfirm(@Valid @ModelAttribute EmployeeForm employeeForm,BindingResult result, Model model) {
-
+		
 		// 従業員IDが既に存在するかチェック
 		if(employeeForm.getEmpId() != null && employeeService.findByEmpId(employeeForm.getEmpId()).isPresent()) {
 			result.rejectValue("empId", "duplicate", "従業員IDが重複しています");
@@ -222,6 +220,98 @@ public class EmployeeController {
 			return "emp_list";  
 		}
 		
+
+		// 従業員変更画面への遷移
+		@GetMapping("/emp_update")
+		public String showEmpUpdate(Model model) {
+			// 実際の従業員IDのリストをデータベースから取得
+			List<Employee> employees = employeeService.findAll();
+			model.addAttribute("employees", employees);
+			return "emp_update";
+		}
+		
+		// 変更選択画面から変更入力画面への遷移
+		@PostMapping("/emp_update_input")
+		public String transitUpdateInput(Integer empId, EmployeeForm employeeForm, Model model,HttpSession session) {
+			if (empId != null) {
+				//従業員IDが指定されている場合
+				//選択された従業員IDを元にデータベースから従業員情報を取得
+				Optional<Employee> fullEmployeeOpt = employeeService.findById(empId);
+				Optional<EmployeeForm> EmployeeOpt;
+				
+				if (fullEmployeeOpt.isPresent()) {
+					EmployeeOpt = Optional.of(makeEmployeeForm(fullEmployeeOpt.get()));
+				} else {
+					EmployeeOpt = Optional.empty();
+				}
+				
+				if (EmployeeOpt.isPresent()) {
+					employeeForm = EmployeeOpt.get();
+				}
+				
+				model.addAttribute("employeeForm", employeeForm);
+				session.setAttribute("beforeEmpId", empId);
+				return "emp_update_input";
+			} else {
+				//従業員IDが指定されていない場合
+				model.addAttribute("errorMessage", "検索条件に該当する従業員は見つかりません");
+				//従業員の一覧を取得してModelに追加
+				List<Employee> employees = employeeService.findAll();
+				
+				model.addAttribute("employees", employees);
+				return "emp_update"; 
+			}
+		}
+		
+		// 変更登録画面から変更確認画面への遷移
+		@PostMapping("/emp_update_confirm")
+		public String transitUpateConfirm(@Valid @ModelAttribute EmployeeForm employeeForm,
+										  BindingResult result,
+										  Model model,HttpSession session) {
+			
+			//従業員IDの変更がないか検証
+			Integer beforeEmpId = (Integer) session.getAttribute("beforeEmpId");
+			
+			if (!beforeEmpId.equals(employeeForm.getEmpId())) {
+				//　従業員IDの変更がないか検証
+		        model.addAttribute("empIdError", "従業員IDが変更されています");
+		        return "emp_update_input"; 
+		    } 
+		    if(result.hasErrors()) {
+				// 入力エラーがある場合、登録画面に戻る
+				model.addAttribute("employeeForm", employeeForm);
+				return "emp_update_input"; 
+			} else {
+				// エラーがない場合、確認画面に進む
+				// Modelにemployeeオブジェクトを追加
+				model.addAttribute("employee", employeeForm);
+				return "emp_update_confirm"; 
+			}
+		}
+		
+		// 変更確認画面から変更完了画面への遷移
+		@PostMapping("/emp_update_complete")
+		public String update(@ModelAttribute EmployeeForm employeeForm, Model model){
+			// Modelにemployeeオブジェクトを追加
+			Employee employee = makeEmployee(employeeForm); 
+			model.addAttribute("employee", employee);
+			// データベースの従業員情報を更新
+			employeeService.update(employee);
+			return "emp_update_complete";
+		}
+		
+		private EmployeeForm makeEmployeeForm(Employee employee) {
+			EmployeeForm employeeForm = new EmployeeForm();
+			employeeForm.setEmpId(employee.getEmpId());
+			employeeForm.setEmpName(employee.getEmpName());
+			employeeForm.setEmail(employee.getEmail());
+			employeeForm.setBirthDate(employee.getBirthDate());
+			employeeForm.setSalary(employee.getSalary());
+			employeeForm.setDeptId(employee.getDeptId());
+			employeeForm.setPassword(employee.getPassword());
+			return employeeForm;
+    }
+
 		// 削除選択画面への遷移
 		@GetMapping("/emp_delete")
 		public String showEmpDelete(Employee employee, Model model) {
@@ -238,7 +328,7 @@ public class EmployeeController {
 				//従業員IDが指定されている場合
 				//選択された従業員IDを元にデータベースから従業員情報を取得
 				Optional<Employee> fullEmployeeOpt = employeeService.findById(empId);
-				model.addAttribute("employee", fullEmployeeOpt.get());
+        model.addAttribute("employee", fullEmployeeOpt.get());
 				return "emp_delete_confirm";
 			} else {
 				//従業員IDが指定されていない場合
@@ -258,3 +348,4 @@ public class EmployeeController {
 		    return "emp_delete_complete";
 		}
 }
+

@@ -48,7 +48,12 @@
 						<td th:text="${employee.birthDate}"></td>
 						<td th:text="${employee.salary}"></td>
 						<td th:text="${employee.department.deptName}"></td>
-						<td><a th:href="@{#}"><button type="button" class="">変更</button></a></td>
+						<td>
+							<form method="POST" th:action="@{/StaffTrack/emp_update_input}">
+								<input type="hidden" name="empId" th:value="${employee.empId}">
+								<input type="submit" value="変更">
+							</form> 
+						</td>
 						<td>
 							<form method="POST" th:action="@{/StaffTrack/emp_delete_confirm}">
 								<input type="hidden" name="empId" th:value="${employee.empId}">
@@ -63,7 +68,12 @@
 						<td th:text="*{birthDate}"></td>
 						<td th:text="*{salary}"></td>
 						<td th:text="*{department.deptName}"></td>
-						<td><a th:href="@{#}"><button type="button" class="">変更</button></a></td>
+						<td>
+							<form method="POST" th:action="@{/StaffTrack/emp_update_input}">
+								<input type="hidden" name="empId" th:value="${employee.empId}">
+								<input type="submit" value="変更">
+							</form> 
+						</td>
 						<td>
 							<form method="POST" th:action="@{/StaffTrack/emp_delete_confirm}">
 								<input type="hidden" name="empId" th:value="${employee.empId}">
