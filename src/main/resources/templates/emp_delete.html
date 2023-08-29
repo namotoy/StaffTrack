@@ -22,7 +22,7 @@
 						<tr>
 							<th>従業員ID</th>
 							<td>
-								<select th:field="*{empId}" id="id-select">
+								<select name="empId" id="id-select">
 									<option value="">従業員IDを選択</option>
 								 	<option th:each="employee : ${employees}" th:value="${employee.empId}" th:text ="${employee.empId + '_' + employee.empName}"></option>
 								</select>

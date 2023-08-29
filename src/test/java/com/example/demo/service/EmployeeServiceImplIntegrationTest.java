@@ -18,10 +18,8 @@ import com.example.demo.entity.Employee;
 @SpringBootTest
 @DisplayName("EmployeeServiceImplの結合テスト")
 public class EmployeeServiceImplIntegrationTest {
-
 	@Autowired
 	private EmployeeService employeeService;
-
 
 	//正常系
 	@Test
@@ -44,24 +42,24 @@ public class EmployeeServiceImplIntegrationTest {
 		assertEquals(4, list.size());
 	}
 
-	//	@Test
-	//	@DisplayName("従業員登録ができた場合のテスト")
-	//	public void insertSuccessTest() {
-	//		Employee employee = new Employee();
-	//        employee.setEmpId(1001); // 重複していないIDを想定
-	//		employee.setEmpName("山田太郎");
-	//		employee.setEmail("samplesample@sample.com");
-	//		employee.setBirthDate(LocalDate.of(2000, 8, 12));
-	//		employee.setSalary(300000);
-	//		employee.setDeptName("総務部");
-	//		employee.setPassword("pass2023");
-	//
-	//        try {
-	//            employeeService.insert(employee);
-	//        } catch (Exception e) {
-	//            fail("Exception should not be thrown.");
-	//        }
-	//    }
+	@Test
+	@DisplayName("従業員登録ができた場合のテスト")
+	public void insertSuccessTest() {
+		Employee employee = new Employee();
+		employee.setEmpId(1001); // 重複していないIDを想定
+		employee.setEmpName("山田太郎");
+		employee.setEmail("samplesample@sample.com");
+		employee.setBirthDate(LocalDate.of(2000, 8, 12));
+		employee.setSalary(300000);
+		employee.setDeptName("総務部");
+		employee.setPassword("pass2023");
+
+		try {
+			employeeService.insert(employee);
+		} catch (Exception e) {
+			fail("Exception should not be thrown.");
+		}
+	}
 
 	@Test
 	@DisplayName("従業員IDで検索できるテスト")
@@ -97,14 +95,14 @@ public class EmployeeServiceImplIntegrationTest {
 			fail("Unexpected exception type thrown.");
 		}
 	}
-	
-//	@Test
-//	@DisplayName("従業員IDで変更ができる場合のテスト")
-//	public void testUpateSuccessfully() {
-//		Employee existingEmployee = new Employee();
-//        existingEmployee.setEmpId(50001); // 既存の従業員IDを仮定
-//        employeeService.update(existingEmployee); 
-//	}
+
+	@Test
+	@DisplayName("従業員IDで変更ができる場合のテスト")
+	public void testUpateSuccessfully() {
+		Employee existingEmployee = new Employee();
+		existingEmployee.setEmpId(50001); // 既存の従業員IDを仮定
+		employeeService.update(existingEmployee); 
+	}
 
 	//異常系
 	@Test
@@ -117,7 +115,6 @@ public class EmployeeServiceImplIntegrationTest {
 			assertEquals("IDまたはパスワードに誤りがあります", e.getMessage());
 		}
 	}
-
 
 	@Test
 	@DisplayName("従業員一覧リストを取得できない場合のテスト")
@@ -191,22 +188,21 @@ public class EmployeeServiceImplIntegrationTest {
 			fail("Unexpected exception type thrown.");
 		}
 	}
-	
-//	@Test
-//	@DisplayName("従業員IDが存在せず変更できない場合のテスト")
-//	public void testUpdateFailure() {
-//		Employee nonExistingEmployee = new Employee();
-//		nonExistingEmployee.setEmpId(10); // 存在しない従業員IDを仮定
-//
-//		boolean hasException = false;
-//		try {
-//			employeeService.update(nonExistingEmployee);
-//		} catch (EmployeeNotFoundException e) {
-//			hasException = true;
-//		} catch (Exception e) {
-//			fail("Unexpected exception type thrown.");
-//		}
-//		assertTrue(hasException, "Expected EmployeeNotFoundException to be thrown.");
-//	}
 
+	@Test
+	@DisplayName("従業員IDが存在せず変更できない場合のテスト")
+	public void testUpdateFailure() {
+		Employee nonExistingEmployee = new Employee();
+		nonExistingEmployee.setEmpId(10); // 存在しない従業員IDを仮定
+
+		boolean hasException = false;
+		try {
+			employeeService.update(nonExistingEmployee);
+		} catch (EmployeeNotFoundException e) {
+			hasException = true;
+		} catch (Exception e) {
+			fail("Unexpected exception type thrown.");
+		}
+		assertTrue(hasException, "Expected EmployeeNotFoundException to be thrown.");
+	}
 }
