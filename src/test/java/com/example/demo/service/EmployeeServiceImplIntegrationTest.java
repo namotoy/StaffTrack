@@ -39,7 +39,7 @@ public class EmployeeServiceImplIntegrationTest {
 	@DisplayName("従業員一覧リストを取得できた場合のテスト")
 	public void findAllCheckCountTest() {
 		List<Employee> list = employeeService.findAll();
-		assertEquals(4, list.size());
+		assertEquals(4, list.size()); //従業員一覧のリスト数を設定
 	}
 
 	@Test
@@ -89,7 +89,7 @@ public class EmployeeServiceImplIntegrationTest {
 	@DisplayName("従業員IDで削除ができる場合のテスト")
 	public void testDeleteSuccessfully() {
 		try {
-			employeeService.delete(1001);  // 存在する従業員IDを設定
+			employeeService.delete(1003);  // 存在する従業員IDを設定
 			// 例外がスローされなければテスト成功
 		} catch (Exception e) {
 			fail("Unexpected exception type thrown.");
@@ -100,8 +100,19 @@ public class EmployeeServiceImplIntegrationTest {
 	@DisplayName("従業員IDで変更ができる場合のテスト")
 	public void testUpateSuccessfully() {
 		Employee existingEmployee = new Employee();
-		existingEmployee.setEmpId(50001); // 既存の従業員IDを仮定
-		employeeService.update(existingEmployee); 
+		existingEmployee.setEmpId(50003);  // 存在する従業員IDを設定
+		existingEmployee.setEmpName("山田太郎");
+		existingEmployee.setEmail("samplesample@sample.com");
+		existingEmployee.setBirthDate(LocalDate.of(2000, 8, 12));
+		existingEmployee.setSalary(300000);
+		existingEmployee.setDeptName("総務部");
+		existingEmployee.setPassword("pass2023");
+		try {
+			employeeService.update(existingEmployee); 
+			// 例外がスローされなければテスト成功
+		} catch (Exception e) {
+			fail("Unexpected exception type thrown.");
+		}
 	}
 
 	//異常系
@@ -190,19 +201,24 @@ public class EmployeeServiceImplIntegrationTest {
 	}
 
 	@Test
-	@DisplayName("従業員IDが存在せず変更できない場合のテスト")
+	@DisplayName("従業員IDが存在せず、変更できない場合のテスト")
 	public void testUpdateFailure() {
 		Employee nonExistingEmployee = new Employee();
-		nonExistingEmployee.setEmpId(10); // 存在しない従業員IDを仮定
-
-		boolean hasException = false;
+		nonExistingEmployee.setEmpId(99999);  // 存在しない従業員IDを設定
+		nonExistingEmployee.setEmpName("山田太郎");
+		nonExistingEmployee.setEmail("samplesample@sample.com");
+		nonExistingEmployee.setBirthDate(LocalDate.of(2000, 8, 12));
+		nonExistingEmployee.setSalary(300000);
+		nonExistingEmployee.setDeptName("総務部");
+		nonExistingEmployee.setPassword("pass2023");
 		try {
 			employeeService.update(nonExistingEmployee);
+			fail("Expected an EmployeeNotFoundException to be thrown."); 
+			// 従業員が存在しないため、更新すると例外がスローされる
 		} catch (EmployeeNotFoundException e) {
-			hasException = true;
+			// 従業員が存在しないという例外がスローされればテスト成功
 		} catch (Exception e) {
-			fail("Unexpected exception type thrown.");
+			fail("Unexpected exception type thrown: " + e.toString());
 		}
-		assertTrue(hasException, "Expected EmployeeNotFoundException to be thrown.");
 	}
 }
