@@ -17,11 +17,11 @@
 			<form th:action="@{/StaffTrack/emp_search}" th:object="${employee}" method="post">
 			    <div class="input-search-field">
 			        <div>従業員ID</div>
-			        <input type="text" class="input-search" th:field="*{empId}">
+			        <input type="text" class="input-search" name="empId" >
 			    </div>
 			    <div class="input-search-field">
 			        <div>従業員名</div>
-			        <input type="text" class="input-search" th:field="*{empName}">
+			        <input type="text" class="input-search" name="empName" >
 			    </div>
 			    <input type="submit" class="btn btn-primary" value="検索">
 			</form>
@@ -49,7 +49,12 @@
 						<td th:text="${employee.birthDate}"></td>
 						<td th:text="${employee.salary}"></td>
 						<td th:text="${employee.department.deptName}"></td>
-						<td><a th:href="@{#}"><button type="button" class="">変更</button></a></td>
+						<td>
+							<form method="POST" th:action="@{/StaffTrack/emp_update_input}">
+								<input type="hidden" name="empId" th:value="${employee.empId}">
+								<input type="submit" value="変更">
+							</form>
+						</td>
 						<td>
 							<form method="POST" th:action="@{/StaffTrack/emp_delete_confirm}">
 								<input type="hidden" name="empId" th:value="${employee.empId}">
@@ -64,7 +69,12 @@
 						<td th:text="*{birthDate}"></td>
 						<td th:text="*{salary}"></td>
 						<td th:text="*{department.deptName}"></td>
-						<td><a th:href="@{#}"><button type="button" class="">変更</button></a></td>
+						<td>
+							<form method="POST" th:action="@{/StaffTrack/emp_update_input}">
+								<input type="hidden" name="empId" th:value="${employee.empId}">
+								<input type="submit" value="変更">
+							</form>
+						</td>
 						<td>
 							<form method="POST" th:action="@{/StaffTrack/emp_delete_confirm}">
 								<input type="hidden" name="empId" th:value="${employee.empId}">
