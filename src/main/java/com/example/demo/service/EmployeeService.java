@@ -17,4 +17,5 @@ public interface EmployeeService {
 	Optional<Employee> findById(int empId);
 	List<Employee>findByName(String empName);
 	public void update(Employee employee);
+	public void delete(int empId);
 }

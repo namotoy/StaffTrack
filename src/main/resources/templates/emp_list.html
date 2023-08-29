@@ -36,7 +36,7 @@
 						<th>生年月日</th>
 						<th>給与</th>
 						<th>部署名</th>
-						<th>編集</th>
+						<th>変更</th>
 						<th>削除</th>
 					</tr>
 				</thead>
@@ -54,7 +54,12 @@
 								<input type="submit" value="変更">
 							</form> 
 						</td>
-						<td><a th:href="@{/}"><button type="button" class="">削除</button></a></td>
+						<td>
+							<form method="POST" th:action="@{/StaffTrack/emp_delete_confirm}">
+								<input type="hidden" name="empId" th:value="${employee.empId}">
+								<input type="submit" value="削除">
+							</form> 
+						</td>
 					</tr>
 					<tr th:if="${searchEmployee != null}" th:object="${searchEmployee}">
 						<td th:text="*{empId}"></td>
@@ -69,7 +74,12 @@
 								<input type="submit" value="変更">
 							</form> 
 						</td>
-						<td><a th:href="@{#}"><button type="button" class="">削除</button></a></td>
+						<td>
+							<form method="POST" th:action="@{/StaffTrack/emp_delete_confirm}">
+								<input type="hidden" name="empId" th:value="${employee.empId}">
+								<input type="submit" value="削除">
+							</form> 
+						</td>
 					</tr>
 				</tbody>
 			</table>
