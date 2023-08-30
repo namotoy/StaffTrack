@@ -88,7 +88,7 @@ public class EmployeeController {
     	//userLogoutメソッドを呼び出す
     	employeeService.userLogout(session);
         // ログイン画面にリダイレクト
-        return "redirect:/login";
+        return "redirect:/StaffTrack/login";
     }
   
     // 従業員一覧画面への遷移
@@ -111,7 +111,12 @@ public class EmployeeController {
 
 	// 従業員登録画面への遷移
 	@GetMapping("/emp_regist")
-	public String showEmpRegist(@ModelAttribute("employeeForm") EmployeeForm employeeForm, Model model) {
+	public String showEmpRegist(@ModelAttribute("employeeForm") EmployeeForm employeeForm, Model model, HttpSession session) {
+		//ログインしていないユーザーが直接従業員一覧ページへアクセスした場合、ログインページへ遷移
+    	String username = (String) session.getAttribute("username");
+        if (username == null) {
+            return "redirect:/StaffTrack/login";
+        }
 		model.addAttribute("employeeForm", new EmployeeForm());
 		return "emp_regist";
 	}
@@ -158,7 +163,11 @@ public class EmployeeController {
 	}
 	// 従業員検索画面への遷移
 		@GetMapping("/emp_search")
-		public String showEmpSearch() {
+		public String showEmpSearch(HttpSession session) {
+			String username = (String) session.getAttribute("username");
+	        if (username == null) {
+	            return "redirect:/StaffTrack/login";
+	        }
 			return "emp_search";
 		}
 	// 従業員検索画面での検索結果への遷移
@@ -223,7 +232,11 @@ public class EmployeeController {
 
 		// 従業員変更画面への遷移
 		@GetMapping("/emp_update")
-		public String showEmpUpdate(Model model) {
+		public String showEmpUpdate(Model model, HttpSession session) {
+			String username = (String) session.getAttribute("username");
+	        if (username == null) {
+	            return "redirect:/StaffTrack/login";
+	        }
 			// 実際の従業員IDのリストをデータベースから取得
 			List<Employee> employees = employeeService.findAll();
 			model.addAttribute("employees", employees);
@@ -314,7 +327,11 @@ public class EmployeeController {
 
 		// 削除選択画面への遷移
 		@GetMapping("/emp_delete")
-		public String showEmpDelete(Employee employee, Model model) {
+		public String showEmpDelete(Employee employee, Model model, HttpSession session) {
+			String username = (String) session.getAttribute("username");
+	        if (username == null) {
+	            return "redirect:/StaffTrack/login";
+	        }
 			// 実際の従業員IDのリストをデータベースから取得
 		    List<Employee> employees = employeeService.findAll();
 		    model.addAttribute("employees", employees);

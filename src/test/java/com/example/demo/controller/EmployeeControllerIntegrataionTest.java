@@ -26,10 +26,58 @@ public class EmployeeControllerIntegrataionTest {
 	private MockMvc mockMvc;
 
 	@Test
-	@DisplayName("ログインしていない場合に各画面へ直接アクセスできないテスト")
-	public void testRedirectToLoginWhenNotLoggedIn() throws Exception {
+	@DisplayName("ログインしていない場合にメニューページへ直接アクセスできないテスト")
+	public void testRedirectToLoginFroMenuWhenNotLoggedIn() throws Exception {
+		// ユーザーがログインしていない状態でmenuへのGETリクエストを模倣
+		mockMvc.perform(MockMvcRequestBuilders.get("/StaffTrack/menu"))
+		// レスポンスがリダイレクトとして、指定されたURLへ遷移することを期待
+		.andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+		.andExpect(MockMvcResultMatchers.redirectedUrl("/StaffTrack/login"));
+	}
+	
+	@Test
+	@DisplayName("ログインしていない場合に一覧ページへ直接アクセスできないテスト")
+	public void testRedirectToLoginFromListWhenNotLoggedIn() throws Exception {
 		// ユーザーがログインしていない状態でemp_listへのGETリクエストを模倣
 		mockMvc.perform(MockMvcRequestBuilders.get("/StaffTrack/emp_list"))
+		// レスポンスがリダイレクトとして、指定されたURLへ遷移することを期待
+		.andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+		.andExpect(MockMvcResultMatchers.redirectedUrl("/StaffTrack/login"));
+	}
+	
+	@Test
+	@DisplayName("ログインしていない場合に登録ページへ直接アクセスできないテスト")
+	public void testRedirectToLoginFromRegistWhenNotLoggedIn() throws Exception {
+		// ユーザーがログインしていない状態でemp_registへのGETリクエストを模倣
+		mockMvc.perform(MockMvcRequestBuilders.get("/StaffTrack/emp_regist"))
+		// レスポンスがリダイレクトとして、指定されたURLへ遷移することを期待
+		.andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+		.andExpect(MockMvcResultMatchers.redirectedUrl("/StaffTrack/login"));
+	}
+	@Test
+	@DisplayName("ログインしていない場合に検索ページへ直接アクセスできないテスト")
+	public void testRedirectToLoginFromSearchWhenNotLoggedIn() throws Exception {
+		// ユーザーがログインしていない状態でemp_searchへのGETリクエストを模倣
+		mockMvc.perform(MockMvcRequestBuilders.get("/StaffTrack/emp_search"))
+		// レスポンスがリダイレクトとして、指定されたURLへ遷移することを期待
+		.andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+		.andExpect(MockMvcResultMatchers.redirectedUrl("/StaffTrack/login"));
+	}
+	@Test
+	@DisplayName("ログインしていない場合に変更ページへ直接アクセスできないテスト")
+	public void testRedirectToLoginFromUpdateWhenNotLoggedIn() throws Exception {
+		// ユーザーがログインしていない状態でemp_updateへのGETリクエストを模倣
+		mockMvc.perform(MockMvcRequestBuilders.get("/StaffTrack/emp_update"))
+		// レスポンスがリダイレクトとして、指定されたURLへ遷移することを期待
+		.andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+		.andExpect(MockMvcResultMatchers.redirectedUrl("/StaffTrack/login"));
+	}
+	
+	@Test
+	@DisplayName("ログインしていない場合に変更ページへ直接アクセスできないテスト")
+	public void testRedirectToLoginFromDeleteWhenNotLoggedIn() throws Exception {
+		// ユーザーがログインしていない状態でemp_deleteへのGETリクエストを模倣
+		mockMvc.perform(MockMvcRequestBuilders.get("/StaffTrack/emp_delete"))
 		// レスポンスがリダイレクトとして、指定されたURLへ遷移することを期待
 		.andExpect(MockMvcResultMatchers.status().is3xxRedirection())
 		.andExpect(MockMvcResultMatchers.redirectedUrl("/StaffTrack/login"));
@@ -143,5 +191,4 @@ public class EmployeeControllerIntegrataionTest {
 		//遷移先のviewの名前がemp_updateであることを検証
 		.andExpect(view().name(is("emp_update")));
 	}
-
 }
