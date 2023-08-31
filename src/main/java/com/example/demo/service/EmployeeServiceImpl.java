@@ -94,7 +94,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public void delete(int empId) {
 		//従業員情報を削除。従業員IDがなければ例外発生
 		if(dao.delete(empId)==0) {
-			throw new EmployeeNotFoundException("削除する従業員が見つかりません");
+			throw new EmployeeNotFoundException("検索条件に該当する従業員は見つかりません");
 		}
 	}
 }
