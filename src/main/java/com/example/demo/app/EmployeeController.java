@@ -122,8 +122,11 @@ public class EmployeeController {
 	}
 	// 登録画面から確認画面への遷移
 	@PostMapping("/emp_regist_confirm")
-	public String transitConfirm(@Valid @ModelAttribute EmployeeForm employeeForm,BindingResult result, Model model) {
-		
+	public String transitConfirm(@Valid @ModelAttribute EmployeeForm employeeForm,BindingResult result, Model model, HttpSession session) {
+		String username = (String) session.getAttribute("username");
+        if (username == null) {
+            return "redirect:/StaffTrack/login";
+        }
 		// 従業員IDが既に存在するかチェック
 		if(employeeForm.getEmpId() != null && employeeService.findByEmpId(employeeForm.getEmpId()).isPresent()) {
 			result.rejectValue("empId", "duplicate", "従業員IDが重複しています");
@@ -141,7 +144,11 @@ public class EmployeeController {
 	// 確認画面から完了画面への遷移
 	@PostMapping("/emp_regist_complete")
 	public String insert(@ModelAttribute EmployeeForm employeeForm,
-			Model model) {
+			Model model, HttpSession session) {
+		String username = (String) session.getAttribute("username");
+		if (username == null) {
+			return "redirect:/StaffTrack/login";
+		}
 		// EmployeeFormからEmployeeオブジェクトを作成
 		Employee employee = makeEmployee(employeeForm); 
 		// データベースに従業員情報を保存
@@ -228,7 +235,6 @@ public class EmployeeController {
 			model.addAttribute("errorMessage", "検索条件に該当する従業員は見つかりません");
 			return "emp_list";  
 		}
-		
 
 		// 従業員変更画面への遷移
 		@GetMapping("/emp_update")
@@ -246,6 +252,10 @@ public class EmployeeController {
 		// 変更選択画面から変更入力画面への遷移
 		@PostMapping("/emp_update_input")
 		public String transitUpdateInput(Integer empId, EmployeeForm employeeForm, Model model,HttpSession session) {
+			 String username = (String) session.getAttribute("username");
+			    if (username == null) {
+			        return "redirect:/StaffTrack/login";
+			    }
 			if (empId != null) {
 				//従業員IDが指定されている場合
 				//選択された従業員IDを元にデータベースから従業員情報を取得
@@ -281,7 +291,10 @@ public class EmployeeController {
 		public String transitUpateConfirm(@Valid @ModelAttribute EmployeeForm employeeForm,
 										  BindingResult result,
 										  Model model,HttpSession session) {
-			
+			 String username = (String) session.getAttribute("username");
+			    if (username == null) {
+			        return "redirect:/StaffTrack/login";
+			    }
 			//従業員IDの変更がないか検証
 			Integer beforeEmpId = (Integer) session.getAttribute("beforeEmpId");
 			
@@ -304,7 +317,11 @@ public class EmployeeController {
 		
 		// 変更確認画面から変更完了画面への遷移
 		@PostMapping("/emp_update_complete")
-		public String update(@ModelAttribute EmployeeForm employeeForm, Model model){
+		public String update(@ModelAttribute EmployeeForm employeeForm, Model model, HttpSession session){
+			 String username = (String) session.getAttribute("username");
+			    if (username == null) {
+			        return "redirect:/StaffTrack/login";
+			    }
 			// Modelにemployeeオブジェクトを追加
 			Employee employee = makeEmployee(employeeForm); 
 			model.addAttribute("employee", employee);
@@ -340,7 +357,11 @@ public class EmployeeController {
 		
 		// 削除選択から削除確認への遷移
 		@PostMapping("/emp_delete_confirm")
-		public String transitDeleteConfirm(Integer empId, Model model) {
+		public String transitDeleteConfirm(Integer empId, Model model, HttpSession session) {
+			String username = (String) session.getAttribute("username");
+	        if (username == null) {
+	            return "redirect:/StaffTrack/login";
+	        }
 			if (empId != null) {
 				//従業員IDが指定されている場合
 				//選択された従業員IDを元にデータベースから従業員情報を取得
@@ -359,10 +380,13 @@ public class EmployeeController {
 		
 		// 削除確認から削除完了への遷移
 		@PostMapping("/emp_delete_complete")
-		public String delete(Integer empId, Model model) {
-		    // データベースの従業員情報を削除
+		public String delete(Integer empId, Model model, HttpSession session) {
+			String username = (String) session.getAttribute("username");
+	        if (username == null) {
+	            return "redirect:/StaffTrack/login";
+	        }
+			// データベースの従業員情報を削除
 		    employeeService.delete(empId);
 		    return "emp_delete_complete";
 		}
 }
-
